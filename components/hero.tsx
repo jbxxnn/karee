@@ -62,7 +62,7 @@ export function Hero() {
             className="text-center lg:text-left h-full flex flex-col justify-start lg:col-span-1"
           >
             <motion.h2 
-              className="text-4xl md:text-3xl lg:text-4xl font-bold text-brand-black leading-tight"
+              className="text-2xl md:text-3xl lg:text-4xl font-bold text-brand-black leading-tight text-left"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.9, ease: "easeOut" }}
@@ -71,7 +71,7 @@ export function Hero() {
             </motion.h2>
             
             <motion.p 
-              className="text-sm md:text-base text-brand-black leading-relaxed"
+              className="text-sm md:text-base text-brand-black leading-relaxed text-left"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.1, ease: "easeOut" }}
