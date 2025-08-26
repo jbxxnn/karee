@@ -20,7 +20,7 @@ export function Header() {
             aria-label="Toggle mobile menu"
 
           >
-            <div className="navbar-hamburger">
+            <div className={`navbar-hamburger ${isMobileMenuOpen ? 'active' : ''}`}>
               <div className="navbar-hamburger-line navbar-hamburger-line-1"></div>
               <div className="navbar-hamburger-line navbar-hamburger-line-2"></div>
             </div>

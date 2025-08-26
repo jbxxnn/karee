@@ -89,6 +89,7 @@
   height: 2px;
   transition: transform .8s cubic-bezier(.18,.71,.11,1), background 1s cubic-bezier(.18,.71,.11,1);
   width: 35px;
+  transform-origin: center;
 }
 
 .navbar-hamburger-line:not(:last-child) {
@@ -98,4 +99,13 @@
 /* Dark mode support */
 .dark .navbar-hamburger-line {
   background: #fff;
+}
+
+/* Hamburger to X Animation */
+.navbar-hamburger.active .navbar-hamburger-line-1 {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.navbar-hamburger.active .navbar-hamburger-line-2 {
+  transform: rotate(-45deg) translate(5px, -5px);
 }
