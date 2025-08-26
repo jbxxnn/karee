@@ -39,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.className} ${bricolage.className} ${syne.className} antialiased`}>
+      <body className={`${geistSans.className} ${bricolage.className} ${syne.className} antialiased bg-brand-cream`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

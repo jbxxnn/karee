@@ -4,7 +4,7 @@ import { useState, Fragment } from 'react';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { CartButton } from '@/components/cart/cart-button';
-import { ThemeSwitcher } from '@/components/theme-switcher';
+// import { ThemeSwitcher } from '@/components/theme-switcher';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -29,7 +29,7 @@ export function Header() {
           <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <Link href="/" className="flex items-center">
               <motion.h1 
-                className="text-xl md:text-2xl lg:text-4xl text-emerald-800 dark:text-emerald-200 font-bold tracking-tight"
+                className="text-xl md:text-2xl lg:text-4xl text-brand-black font-bold tracking-tight"
                 style={{
                   scale: headerLogoScale,
                   opacity: headerLogoOpacity
@@ -69,9 +69,9 @@ export function Header() {
           </nav>
 
           {/* Right Section - Utility Icons */}
-          <div className="absolute right-0 top-1/2 transform -translate-y-1/2 flex items-center space-x-4 sm:space-x-6">
+          <div className="absolute right-0 top-1/2 transform -translate-y-1/2 flex items-center space-x-4 pr-6 sm:space-x-6">
             <CartButton />
-            <ThemeSwitcher />
+            {/* <ThemeSwitcher /> */}
           </div>
         </div>
 

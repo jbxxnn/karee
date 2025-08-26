@@ -7,12 +7,12 @@ export function Hero() {
   const { scrollY } = useScroll();
   
   // Transform values for the large logo - stops at a point then disappears
-  const logoScale = useTransform(scrollY, [0, 230], [1, 0.15]);
-  const logoY = useTransform(scrollY, [0, 300], [0, 0]);
+  const logoScale = useTransform(scrollY, [0, 230], [1, 0.1]);
+  const logoY = useTransform(scrollY, [0, -500], [0, 0]);
   const logoOpacity = useTransform(scrollY, [200, 230], [1, 0]);
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950 dark:to-teal-950 overflow-hidden">
+    <section className="relative bg-brand-cream min-h-screen overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
@@ -35,7 +35,7 @@ export function Hero() {
         }}
       >
         <motion.h1 
-          className="text-8xl md:text-9xl lg:text-[25rem] font-bold text-emerald-800 dark:text-emerald-200 tracking-tight"
+          className="text-8xl md:text-9xl lg:text-[25rem] font-bold text-brand-black tracking-tight"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
@@ -74,7 +74,7 @@ export function Hero() {
             className="text-center lg:text-left h-full flex flex-col justify-between"
           >
             <motion.h2 
-              className="text-4xl md:text-3xl lg:text-4xl font-bold text-emerald-800 dark:text-emerald-200 leading-tight"
+              className="text-4xl md:text-3xl lg:text-4xl font-bold text-brand-black leading-tight"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.9, ease: "easeOut" }}
@@ -83,7 +83,7 @@ export function Hero() {
             </motion.h2>
             
             <motion.p 
-              className="text-xl md:text-2xl text-emerald-600 dark:text-emerald-300 leading-relaxed"
+              className="text-xl md:text-2xl text-brand-black leading-relaxed"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.1, ease: "easeOut" }}
@@ -102,12 +102,12 @@ export function Hero() {
         transition={{ delay: 1.5 }}
       >
         <motion.div 
-          className="w-6 h-10 border-2 border-emerald-300 dark:border-emerald-600 rounded-full flex justify-center"
+          className="w-6 h-10 border-2 border-brand-black rounded-full flex justify-center"
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
           <motion.div 
-            className="w-1 h-3 bg-emerald-400 dark:bg-emerald-500 rounded-full mt-2"
+            className="w-1 h-3 bg-brand-black rounded-full mt-2"
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           />
