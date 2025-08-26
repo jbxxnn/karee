@@ -72,7 +72,7 @@ export function Header() {
 
         {/* Mobile Menu Overlay */}
         <div 
-          className={`lg:hidden fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 z-40 ${
+          className={`lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-300 z-40 ${
             isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
           onClick={() => setIsMobileMenuOpen(false)}
@@ -80,7 +80,7 @@ export function Header() {
 
         {/* Mobile Menu */}
         <div 
-          className={`lg:hidden fixed bottom-0 left-1/2 transform -translate-x-1/2 h-[60%] w-[90%] max-w-sm bg-white dark:bg-gray-900 shadow-2xl transition-transform duration-300 ease-in-out z-50 rounded-t-3xl ${
+          className={`lg:hidden fixed bottom-10 left-1/2 transform -translate-x-1/2 h-[60%] w-[90%] max-w-sm bg-white dark:bg-gray-900 shadow-2xl transition-transform duration-300 ease-in-out z-50 rounded-lg ${
             isMobileMenuOpen ? 'translate-y-0' : 'translate-y-full'
           }`}
         >
@@ -132,7 +132,7 @@ export function Header() {
           </nav>
 
           {/* Menu Footer */}
-          <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+          <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 rounded-b-lg">
             <div className="text-center text-sm text-gray-500 dark:text-gray-400">
               <p>© 2024 kareè</p>
               <p className="mt-1">All rights reserved</p>
