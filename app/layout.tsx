@@ -40,7 +40,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.className} antialiased bg-brand-cream`}>
+      <body className={`${geistSans.className} ${syne.variable} ${bricolage.variable} antialiased bg-brand-cream`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
