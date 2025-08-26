@@ -23,9 +23,9 @@ export function CartButton() {
         openCart();
       }}
     >
-     <span className="font-xs text-brand-black">cart</span>
+     <span className="font-xs text-brand-black dark:text-brand-cream">cart</span>
       
-      <span className="CartCount u-p3 text-brand-black">({totalItemsCount})</span>
+      <span className="CartCount u-p3 text-brand-black dark:text-brand-cream">({totalItemsCount})</span>
     </a>
   );
 }
