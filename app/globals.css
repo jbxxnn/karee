@@ -68,3 +68,34 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom Hamburger Menu Styles */
+.navbar-hamburger {
+  cursor: pointer;
+  display: none;
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 767.98px) {
+  .navbar-hamburger {
+    display: block;
+    order: 1;
+  }
+}
+
+.navbar-hamburger-line {
+  background: #333;
+  height: 2px;
+  transition: transform .8s cubic-bezier(.18,.71,.11,1), background 1s cubic-bezier(.18,.71,.11,1);
+  width: 35px;
+}
+
+.navbar-hamburger-line:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+/* Dark mode support */
+.dark .navbar-hamburger-line {
+  background: #fff;
+}

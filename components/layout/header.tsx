@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { CartButton } from '@/components/cart/cart-button';
 import { ThemeSwitcher } from '@/components/theme-switcher';
-import { Menu, X } from 'lucide-react';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -15,10 +14,16 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Mobile Menu Button */}
           <button
+            type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+            className="lg:hidden p-2"
+            aria-label="Toggle mobile menu"
+
           >
-            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            <div className="navbar-hamburger">
+              <div className="navbar-hamburger-line navbar-hamburger-line-1"></div>
+              <div className="navbar-hamburger-line navbar-hamburger-line-2"></div>
+            </div>
           </button>
 
           {/* Left Section - Navigation Links (Hidden on mobile) */}
