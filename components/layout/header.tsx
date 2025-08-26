@@ -24,9 +24,24 @@ export function Header() {
         }}
       >
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-3 items-center h-16">
+        <div className="relative h-16">
+          {/* Center Section - Brand Logo/Title */}
+          <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <Link href="/" className="flex items-center">
+              <motion.h1 
+                className="text-xl md:text-2xl lg:text-4xl text-emerald-800 dark:text-emerald-200 font-bold tracking-tight"
+                style={{
+                  scale: headerLogoScale,
+                  opacity: headerLogoOpacity
+                }}
+              >
+                kareè
+              </motion.h1>
+            </Link>
+          </div>
+
           {/* Left Section - Navigation Links (Hidden on mobile) */}
-          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
+          <nav className="hidden lg:flex items-center h-full space-x-6 xl:space-x-8">
             <Link 
               href="/products" 
               className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-sm font-medium"
@@ -53,23 +68,8 @@ export function Header() {
             </Link>
           </nav>
 
-          {/* Center Section - Brand Logo/Title */}
-          <div className="flex justify-center">
-            <Link href="/" className="flex items-center">
-              <motion.h1 
-                className="text-xl md:text-2xl lg:text-4xl text-emerald-800 dark:text-emerald-200 font-bold tracking-tight"
-                style={{
-                  scale: headerLogoScale,
-                  opacity: headerLogoOpacity
-                }}
-              >
-                kareè
-              </motion.h1>
-            </Link>
-          </div>
-
           {/* Right Section - Utility Icons */}
-          <div className="flex items-center justify-end space-x-4 sm:space-x-6">
+          <div className="absolute right-0 top-1/2 transform -translate-y-1/2 flex items-center space-x-4 sm:space-x-6">
             <CartButton />
             <ThemeSwitcher />
           </div>
