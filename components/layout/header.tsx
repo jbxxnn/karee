@@ -80,8 +80,8 @@ export function Header() {
 
         {/* Mobile Menu */}
         <div 
-          className={`lg:hidden fixed top-0 left-0 h-full w-[90%] max-w-sm bg-white dark:bg-gray-900 shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${
-            isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          className={`lg:hidden fixed bottom-0 left-1/2 transform -translate-x-1/2 h-[60%] w-[90%] max-w-sm bg-white dark:bg-gray-900 shadow-2xl transition-transform duration-300 ease-in-out z-50 rounded-t-3xl ${
+            isMobileMenuOpen ? 'translate-y-0' : 'translate-y-full'
           }`}
         >
           {/* Menu Header */}
@@ -132,7 +132,7 @@ export function Header() {
           </nav>
 
           {/* Menu Footer */}
-          <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-gray-200 dark:border-gray-700">
+          <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
             <div className="text-center text-sm text-gray-500 dark:text-gray-400">
               <p>© 2024 kareè</p>
               <p className="mt-1">All rights reserved</p>
