@@ -75,6 +75,13 @@ export function Header() {
           className={`lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-300 z-40 ${
             isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
+          style={{
+            backgroundImage: `
+              linear-gradient(45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.03) 75%),
+              linear-gradient(-45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.03) 75%)
+            `,
+            backgroundSize: '6px 6px'
+          }}
           onClick={() => setIsMobileMenuOpen(false)}
         />
 
