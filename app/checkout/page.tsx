@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCartStore } from '@/lib/stores/cart-store';
 import { CheckoutForm } from '@/components/checkout/checkout-form';
@@ -17,7 +17,7 @@ export default function CheckoutPage() {
     items.reduce((total, item) => total + item.quantity, 0), 
     [items]
   );
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
   // Redirect if cart is empty
   useEffect(() => {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import { useCartStore } from '@/lib/stores/cart-store';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,7 +10,7 @@ import { CheckCircle, Package, Home, ShoppingBag } from 'lucide-react';
 import Link from 'next/link';
 
 export default function CheckoutSuccessPage() {
-  const router = useRouter();
+  // const router = useRouter();
   const { clearCart } = useCartStore();
   const [orderNumber, setOrderNumber] = useState('');
 
@@ -35,7 +35,7 @@ export default function CheckoutSuccessPage() {
             Order Confirmed!
           </CardTitle>
           <p className="text-gray-600 dark:text-gray-400 mt-2">
-            Thank you for your purchase. We've received your order and will begin processing it right away.
+            Thank you for your purchase. We&apos;ve received your order and will begin processing it right away.
           </p>
         </CardHeader>
         
@@ -72,9 +72,9 @@ export default function CheckoutSuccessPage() {
           <div className="space-y-3">
             <h3 className="font-medium text-gray-900 dark:text-gray-100">What happens next?</h3>
             <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-              <p>• You'll receive an order confirmation email shortly</p>
-              <p>• We'll process your order within 1-2 business days</p>
-              <p>• You'll get tracking information once your order ships</p>
+              <p>• You&apos;ll receive an order confirmation email shortly</p>
+              <p>• We&apos;ll process your order within 1-2 business days</p>
+              <p>• You&apos;ll get tracking information once your order ships</p>
               <p>• Estimated delivery: 3-5 business days</p>
             </div>
           </div>

@@ -70,7 +70,7 @@ export default function ProductPage() {
               {error || 'Product not found'}
             </h2>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              The product you're looking for doesn't exist or has been removed.
+              The product you&apos;re looking for doesn&apos;t exist or has been removed.
             </p>
             <div className="space-y-2">
               <Button onClick={loadProduct} variant="outline" className="w-full">
