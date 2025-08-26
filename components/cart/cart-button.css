@@ -1,0 +1,65 @@
+/* CartCount positioning - centered inside the bag */
+.CartCount {
+    position: absolute;
+    top: 55%;
+    left: 150%;
+    transform: translate(-50%, -50%);
+    font-size: .8rem;
+    font-weight: 300;
+    color: #000000;
+    line-height: 1;
+}
+
+@media screen and (min-width: 1025px) {
+    .CartCount {
+        position: absolute;
+        top: 55%;
+        left: 150%;
+        transform: translate(-50%, -50%);
+        font-size: .8rem;
+        font-weight: 300;
+
+    }
+}
+
+/* Header Links SVG Sizing */
+.header--Links svg {
+    width: 16px;
+    height: 16px;
+}
+
+@media screen and (min-width: 1025px) {
+    .header--Links svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+@media screen and (min-width: 1025px) {
+    @media screen and (min-width: 1025px) {
+        .header--Links svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+}
+
+/* SVG Pointer Events and Alignment */
+svg {
+    pointer-events: none;
+    align-items: center;
+}
+
+@media screen and (min-width: 1025px) {
+    svg {
+        pointer-events: none;
+        align-items: center;
+    }
+}
+
+/* Header Links Display */
+@media screen and (min-width: 1025px) {
+    .header--Links a {
+        display: flex;
+    }
+}

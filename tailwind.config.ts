@@ -10,6 +10,11 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        geist: ['var(--font-geist-sans)', 'sans-serif'],
+        syne: ['var(--font-syne)', 'serif'],
+        bricolage: ['var(--font-bricolage)', 'sans-serif'],
+      },
       colors: {
         brand: {
           cream: "#fff7e6",
