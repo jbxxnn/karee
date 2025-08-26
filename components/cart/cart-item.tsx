@@ -2,10 +2,9 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { Minus, Plus, X, Trash2 } from 'lucide-react';
+import { Minus, Plus, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CartItem as CartItemType } from '@/lib/stores/cart-store';
-import { cn } from '@/lib/utils';
 
 interface CartItemProps {
   item: CartItemType;

@@ -85,7 +85,7 @@ export default function ProductsPage() {
             Our Products
           </h1>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Discover our amazing collection of products. Use the filters below to find exactly what you're looking for.
+            Discover our amazing collection of products. Use the filters below to find exactly what you&apos;re looking for.
           </p>
         </div>
 

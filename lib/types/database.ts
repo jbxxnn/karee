@@ -83,7 +83,7 @@ export interface UserProfile {
   preferences?: {
     newsletter?: boolean;
     marketing_emails?: boolean;
-    [key: string]: any;
+    [key: string]: unknown;
   };
   created_at: string;
   updated_at: string;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Product, ProductImage, Category } from '@/lib/types/database';
 import { ProductGrid } from './product-grid';
 import { ProductFilters, ProductFilters as ProductFiltersType } from './product-filters';
