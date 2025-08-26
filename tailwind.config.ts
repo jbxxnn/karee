@@ -15,6 +15,10 @@ export default {
         syne: ['var(--font-syne)', 'serif'],
         bricolage: ['var(--font-bricolage)', 'sans-serif'],
       },
+      scrollBehavior: {
+        'smooth': 'smooth',
+        'auto': 'auto',
+      },
       colors: {
         brand: {
           cream: "#f5f5f5",

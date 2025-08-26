@@ -29,7 +29,7 @@ export function Header() {
           <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <Link href="/" className="flex items-center">
               <motion.h1 
-                className="text-2xl md:text-2xl lg:text-4xl text-brand-black dark:text-brand-cream font-bold tracking-tight"
+                className="text-2xl md:text-2xl lg:text-4xl text-brand-black dark:text-brand-cream font-bold tracking-tight font-bricolage"
                 style={{
                   scale: headerLogoScale,
                   opacity: headerLogoOpacity

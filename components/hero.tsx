@@ -12,19 +12,7 @@ export function Hero() {
   const logoOpacity = useTransform(scrollY, [200, 230], [1, 0]);
 
   return (
-    <section className="relative bg-brand-cream min-h-screen overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `
-            radial-gradient(circle at 25% 25%, currentColor 1px, transparent 1px),
-            radial-gradient(circle at 75% 75%, currentColor 1px, transparent 1px)
-          `,
-          backgroundSize: '50px 50px',
-          color: 'currentColor'
-        }} />
-      </div>
-
+    <section id="hero" className="relative bg-brand-cream min-h-screen overflow-hidden w-full">
       {/* Large Logo - Positioned above everything including header */}
       <motion.div 
         className="relative top-0 left-0 right-0 text-center z-[60]"
@@ -35,7 +23,7 @@ export function Hero() {
         }}
       >
         <motion.h1 
-          className="text-8xl md:text-9xl lg:text-[25rem] font-bold text-brand-black tracking-tight"
+          className="text-8xl md:text-9xl lg:text-[25rem] font-bold text-brand-black tracking-tight font-bricolage"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
@@ -53,9 +41,9 @@ export function Hero() {
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-            className="relative"
+            className="relative lg:col-span-1"
           >
-            <div className="relative w-full h-[500px] lg:h-[900px] overflow-hidden">
+            <div className="relative w-full h-[500px] lg:h-[700px] overflow-hidden">
               <Image
                 src="/home-1-3.jpg"
                 alt="Natural shea butter product application"
@@ -71,7 +59,7 @@ export function Hero() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.7, ease: "easeOut" }}
-            className="text-center lg:text-left h-full flex flex-col justify-between"
+            className="text-center lg:text-left h-full flex flex-col justify-start lg:col-span-1"
           >
             <motion.h2 
               className="text-4xl md:text-3xl lg:text-4xl font-bold text-brand-black leading-tight"
@@ -79,40 +67,20 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.9, ease: "easeOut" }}
             >
-              100% organic and natural <br /> shea butter
+              Nourish Your Skin, Naturally.
             </motion.h2>
             
             <motion.p 
-              className="text-xl md:text-2xl text-brand-black leading-relaxed"
+              className="text-sm md:text-base text-brand-black leading-relaxed"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.1, ease: "easeOut" }}
             >
-              Discover the perfect blend of natural ingredients for your skin
+             Premium whipped shea butter, crafted with love for glowing, healthy skin.
             </motion.p>
           </motion.div>
         </div>
       </div>
-
-      {/* Scroll Indicator */}
-      <motion.div 
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-      >
-        <motion.div 
-          className="w-6 h-10 border-2 border-brand-black rounded-full flex justify-center"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <motion.div 
-            className="w-1 h-3 bg-brand-black rounded-full mt-2"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-        </motion.div>
-      </motion.div>
     </section>
   );
 }

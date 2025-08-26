@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Syne, Bricolage_Grotesque } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "react-hot-toast";
+import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -39,7 +40,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.className} ${bricolage.className} ${syne.className} antialiased bg-brand-cream`}>
+      <body className={`${geistSans.className} antialiased bg-brand-cream`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -47,6 +48,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <ScrollToTop />
           <Toaster
             position="top-right"
             toastOptions={{

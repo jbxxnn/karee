@@ -4,6 +4,9 @@
 
 @layer base {
   :root {
+    --font-geist-sans: 'Geist', sans-serif;
+    --font-syne: 'Syne', serif;
+    --font-bricolage: 'Bricolage Grotesque', sans-serif;
     --brand-cream: #fff7e6;
     --brand-navy: #102e4a;
     --background: 0 0% 100%;
@@ -63,6 +66,9 @@
 @layer base {
   * {
     @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
   }
   body {
     @apply bg-background text-foreground;
