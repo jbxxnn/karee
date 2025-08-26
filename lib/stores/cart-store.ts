@@ -123,33 +123,34 @@ export const useCartStore = create<CartStore>()(
         set({ isOpen: false });
       },
 
-             totalItems: () => {
-         return get().items.reduce((total, item) => total + item.quantity, 0);
-       },
+      // Computed values - implement as getters
+      get totalItems() {
+        return get().items.reduce((total, item) => total + item.quantity, 0);
+      },
 
-       subtotal: () => {
-         return get().items.reduce((total, item) => {
-           const price = item.selectedVariant?.price || item.product.price;
-           return total + (price * item.quantity);
-         }, 0);
-       },
+      get subtotal() {
+        return get().items.reduce((total, item) => {
+          const price = item.selectedVariant?.price || item.product.price;
+          return total + (price * item.quantity);
+        }, 0);
+      },
 
-       totalPrice: () => {
-         return get().subtotal(); // Alias for subtotal
-       },
+      get totalPrice() {
+        return get().subtotal; // Alias for subtotal
+      },
 
-       shipping: () => {
-         const subtotal = get().subtotal();
-         return subtotal >= SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
-       },
+      get shipping() {
+        const subtotal = get().subtotal;
+        return subtotal >= SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
+      },
 
-       tax: () => {
-         return get().subtotal() * TAX_RATE;
-       },
+      get tax() {
+        return get().subtotal * TAX_RATE;
+      },
 
-       total: () => {
-         return get().subtotal() + get().shipping() + get().tax();
-       },
+      get total() {
+        return get().subtotal + get().shipping + get().tax;
+      },
     }),
     {
       name: 'cart-storage',
