@@ -1,44 +1,118 @@
-import { NextLogo } from "./next-logo";
-import { SupabaseLogo } from "./supabase-logo";
+'use client';
+
+import { motion, useScroll, useTransform } from 'framer-motion';
+import Image from 'next/image';
 
 export function Hero() {
+  const { scrollY } = useScroll();
+  
+  // Transform values for the large logo - stops at a point then disappears
+  const logoScale = useTransform(scrollY, [0, 230], [1, 0.15]);
+  const logoY = useTransform(scrollY, [0, 300], [0, 0]);
+  const logoOpacity = useTransform(scrollY, [200, 230], [1, 0]);
+
   return (
-    <div className="flex flex-col gap-16 items-center">
-      <div className="flex gap-8 justify-center items-center">
-        <a
-          href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <SupabaseLogo />
-        </a>
-        <span className="border-l rotate-45 h-6" />
-        <a href="https://nextjs.org/" target="_blank" rel="noreferrer">
-          <NextLogo />
-        </a>
+    <section className="relative min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950 dark:to-teal-950 overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            radial-gradient(circle at 25% 25%, currentColor 1px, transparent 1px),
+            radial-gradient(circle at 75% 75%, currentColor 1px, transparent 1px)
+          `,
+          backgroundSize: '50px 50px',
+          color: 'currentColor'
+        }} />
       </div>
-      <h1 className="sr-only">Supabase and Next.js Starter Template</h1>
-      <p className="text-3xl lg:text-4xl !leading-tight mx-auto max-w-xl text-center">
-        The fastest way to build apps with{" "}
-        <a
-          href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-          target="_blank"
-          className="font-bold hover:underline"
-          rel="noreferrer"
+
+      {/* Large Logo - Positioned above everything including header */}
+      <motion.div 
+        className="relative top-0 left-0 right-0 text-center z-[60]"
+        style={{
+          scale: logoScale,
+          y: logoY,
+          opacity: logoOpacity
+        }}
+      >
+        <motion.h1 
+          className="text-8xl md:text-9xl lg:text-[25rem] font-bold text-emerald-800 dark:text-emerald-200 tracking-tight"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
         >
-          Supabase
-        </a>{" "}
-        and{" "}
-        <a
-          href="https://nextjs.org/"
-          target="_blank"
-          className="font-bold hover:underline"
-          rel="noreferrer"
+          kareè
+        </motion.h1>
+      </motion.div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+
+        {/* Two Column Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          {/* Left Column - Image */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+            className="relative"
+          >
+            <div className="relative w-full h-[500px] lg:h-[900px] overflow-hidden">
+              <Image
+                src="/home-1-3.jpg"
+                alt="Natural shea butter product application"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+          </motion.div>
+
+          {/* Right Column - Text */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.7, ease: "easeOut" }}
+            className="text-center lg:text-left h-full flex flex-col justify-between"
+          >
+            <motion.h2 
+              className="text-4xl md:text-3xl lg:text-4xl font-bold text-emerald-800 dark:text-emerald-200 leading-tight"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.9, ease: "easeOut" }}
+            >
+              100% organic and natural <br /> shea butter
+            </motion.h2>
+            
+            <motion.p 
+              className="text-xl md:text-2xl text-emerald-600 dark:text-emerald-300 leading-relaxed"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 1.1, ease: "easeOut" }}
+            >
+              Discover the perfect blend of natural ingredients for your skin
+            </motion.p>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <motion.div 
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
+      >
+        <motion.div 
+          className="w-6 h-10 border-2 border-emerald-300 dark:border-emerald-600 rounded-full flex justify-center"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
         >
-          Next.js
-        </a>
-      </p>
-      <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-8" />
-    </div>
+          <motion.div 
+            className="w-1 h-3 bg-emerald-400 dark:bg-emerald-500 rounded-full mt-2"
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+        </motion.div>
+      </motion.div>
+    </section>
   );
 }

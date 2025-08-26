@@ -2,30 +2,28 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { CartButton } from '@/components/cart/cart-button';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { scrollY } = useScroll();
+  
+  // Transform values for header logo animation - much more gradual and synchronized
+  const headerLogoScale = useTransform(scrollY, [200, 500], [0.6, 1]);
+  const headerLogoOpacity = useTransform(scrollY, [200, 500], [0, 1]);
+  const headerBackgroundOpacity = useTransform(scrollY, [230, 230], [0, 1]);
 
   return (
-    <header className="w-full bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
-      <div className="mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="flex items-center justify-between h-16">
-          {/* Mobile Menu Button */}
-          <button
-            type="button"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2"
-            aria-label="Toggle mobile menu"
-
-          >
-            <div className={`navbar-hamburger ${isMobileMenuOpen ? 'active' : ''}`}>
-              <div className="navbar-hamburger-line navbar-hamburger-line-1"></div>
-              <div className="navbar-hamburger-line navbar-hamburger-line-2"></div>
-            </div>
-          </button>
-
+    <motion.header 
+      className="fixed top-0 left-0 right-0 z-50 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-700/50"
+      style={{
+        backgroundColor: `rgba(255, 255, 255, ${headerBackgroundOpacity})`,
+      }}
+    >
+      <div className="mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-3 items-center h-16">
           {/* Left Section - Navigation Links (Hidden on mobile) */}
           <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             <Link 
@@ -36,39 +34,58 @@ export function Header() {
             </Link>
             <Link 
               href="/cart" 
-              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-sm font-medium"
+              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200 text-sm font-medium"
             >
               about us
             </Link>
             <Link 
               href="/cart" 
-              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-sm font-medium"
+              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200 text-sm font-medium"
             >
               collections
             </Link>
             <Link 
               href="/checkout" 
-              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-sm font-medium"
+              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200 text-sm font-medium"
             >
               support
             </Link>
           </nav>
 
           {/* Center Section - Brand Logo/Title */}
-          <div className="flex-1 flex justify-center lg:flex-none lg:justify-center">
+          <div className="flex justify-center">
             <Link href="/" className="flex items-center">
-              <h1 className="text-xl sm:text-2xl text-gray-900 dark:text-white">
+              <motion.h1 
+                className="text-xl md:text-2xl lg:text-4xl text-emerald-800 dark:text-emerald-200 font-bold tracking-tight"
+                style={{
+                  scale: headerLogoScale,
+                  opacity: headerLogoOpacity
+                }}
+              >
                 kareè
-              </h1>
+              </motion.h1>
             </Link>
           </div>
 
           {/* Right Section - Utility Icons */}
-          <div className="flex items-center space-x-4 sm:space-x-6">
+          <div className="flex items-center justify-end space-x-4 sm:space-x-6">
             <CartButton />
             <ThemeSwitcher />
           </div>
         </div>
+
+        {/* Mobile Menu Button - Positioned absolutely for mobile */}
+        <button
+          type="button"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="lg:hidden absolute top-4 left-4 p-2"
+          aria-label="Toggle mobile menu"
+        >
+          <div className={`navbar-hamburger ${isMobileMenuOpen ? 'active' : ''}`}>
+            <div className="navbar-hamburger-line navbar-hamburger-line-1"></div>
+            <div className="navbar-hamburger-line navbar-hamburger-line-2"></div>
+          </div>
+        </button>
 
         {/* Mobile Menu Overlay */}
         <div 
@@ -110,28 +127,28 @@ export function Header() {
           <nav className="p-6 space-y-6">
             <Link 
               href="/products" 
-              className="block text-lg text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 font-medium border-b border-transparent hover:border-gray-300 dark:hover:border-gray-600 pb-2"
+              className="block text-lg text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200 font-medium border-b border-transparent hover:border-gray-300 dark:hover:border-gray-600 pb-2"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               shop
             </Link>
             <Link 
               href="/cart" 
-              className="block text-lg text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 font-medium border-b border-transparent hover:border-gray-300 dark:hover:border-gray-600 pb-2"
+              className="block text-lg text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200 font-medium border-b border-transparent hover:border-gray-300 dark:hover:border-gray-600 pb-2"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               about us
             </Link>
             <Link 
               href="/cart" 
-              className="block text-lg text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 font-medium border-b border-transparent hover:border-gray-300 dark:hover:border-gray-600 pb-2"
+              className="block text-lg text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200 text-sm font-medium border-b border-transparent hover:border-gray-300 dark:hover:border-gray-600 pb-2"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               collections
             </Link>
             <Link 
               href="/checkout" 
-              className="block text-lg text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 font-medium border-b border-transparent hover:border-gray-300 dark:hover:border-gray-600 pb-2"
+              className="block text-lg text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200 text-sm font-medium border-b border-transparent hover:border-gray-300 dark:hover:border-gray-600 pb-2"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               support
@@ -147,6 +164,6 @@ export function Header() {
           </div>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }
