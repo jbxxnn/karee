@@ -13,7 +13,7 @@ export default function Home() {
     <Layout>
       <main className="flex flex-col items-center bg-brand-cream">
         <div className="flex-1 w-full flex flex-col gap-20 items-center">
-          <div className="w-full flex-1 flex flex-col gap-20 p-5">
+          <div className="w-full flex-1 flex flex-col gap-20 p-0">
             <Hero />
             <About />
             <Separator className="bg-brand-black/10" />

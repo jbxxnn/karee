@@ -9,7 +9,7 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="w-full bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700">
+    <header className="sticky top-0 z-50 w-full bg-brand-cream dark:bg-gray-900 shadow-sm">
       <div className="mx-auto px-4 sm:px-6 lg:px-12">
         <div className="grid grid-cols-3 items-center h-16">
           {/* Left Section - Navigation Links (Hidden on mobile) */}
@@ -147,7 +147,7 @@ export function Header() {
           </div>
         </div>
       </div>
-      <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent mb-2" />
+      {/* <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent mb-2" /> */}
     </header>
   );
 }
