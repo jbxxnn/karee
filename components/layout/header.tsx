@@ -11,7 +11,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full bg-brand-cream dark:bg-gray-900 shadow-sm">
       <div className="mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="grid grid-cols-3 items-center h-16">
+        <div className="relative flex items-center justify-between h-16">
           {/* Left Section - Navigation Links (Hidden on mobile) */}
           <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8 font-pp-mori">
             <Link 
@@ -41,16 +41,16 @@ export function Header() {
           </nav>
 
           {/* Center Section - Brand Logo/Title */}
-          <div className="flex justify-center">
+          <div className="absolute left-1/2 transform -translate-x-1/2 flex justify-center items-center">
             <Link href="/" className="flex items-center">
-              <h1 className="text-2xl sm:text-2xl text-gray-900 dark:text-white">
+              <h1 className="text-2xl sm:text-2xl text-gray-900 dark:text-white font-pp-editorial">
                 kareè
               </h1>
             </Link>
           </div>
 
           {/* Right Section - Utility Icons */}
-          <div className="flex items-center justify-end space-x-4 sm:space-x-6">
+          <div className="flex items-center justify-end space-x-4 sm:space-x-6 ml-auto">
             <CartButton />
             <ThemeSwitcher />
           </div>
@@ -61,7 +61,7 @@ export function Header() {
         <button
           type="button"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="lg:hidden absolute top-4 left-4 p-2"
+          className="lg:hidden absolute top-4 left-4 p-2 z-10"
           aria-label="Toggle mobile menu"
         >
           <div className={`navbar-hamburger ${isMobileMenuOpen ? 'active' : ''}`}>
