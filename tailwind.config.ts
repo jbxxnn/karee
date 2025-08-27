@@ -14,14 +14,18 @@ export default {
         geist: ['var(--font-geist-sans)', 'sans-serif'],
         syne: ['var(--font-syne)', 'serif'],
         bricolage: ['var(--font-bricolage)', 'sans-serif'],
+        'pp-editorial': ['var(--font-pp-editorial-new)', 'serif'],
+        'pp-mori': ['var(--font-pp-mori)', 'sans-serif'],
       },
-      scrollBehavior: {
-        'smooth': 'smooth',
-        'auto': 'auto',
+      fontWeight: {
+        'ultralight': '200',
+        'extralight': '200',
+        'semibold': '600',
+        'ultrabold': '800',
       },
       colors: {
         brand: {
-          cream: "#f5f5f5",
+          cream: "#EEEDE6",
           black: "#3b3b3b",
           secondary: "#e7dbcd",
         },

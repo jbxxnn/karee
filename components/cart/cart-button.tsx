@@ -15,7 +15,7 @@ export function CartButton() {
     <a 
       href="/cart" 
       aria-label="Cart" 
-      className="u-p3 header-CartBag relative text-xxs text-brand-black" 
+      className="u-p3 header-CartBag relative text-xxs text-brand-black font-pp-mori" 
       data-action="toggle-drawer" 
       data-toggle-id="cart"
       onClick={(e) => {
