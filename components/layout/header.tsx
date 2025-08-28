@@ -43,7 +43,7 @@ export function Header() {
           {/* Center Section - Brand Logo/Title */}
           <div className="absolute left-1/2 transform -translate-x-1/2 flex justify-center items-center">
             <Link href="/" className="flex items-center">
-              <h1 className="text-2xl sm:text-2xl text-gray-900 dark:text-white font-pp-editorial">
+              <h1 className="text-2xl sm:text-2xl text-gray-900 dark:text-white">
                 kareè
               </h1>
             </Link>

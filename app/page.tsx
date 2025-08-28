@@ -17,7 +17,7 @@ export default function Home() {
             <Hero />
             <About />
             <Separator className="bg-brand-black/10" />
-            <div className="w-full flex flex-col gap-2">
+            <div className="w-full flex flex-col gap-2 p-3 md:p-5">
                 <div className="text-left">
                   <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-brand-black mb-6 font-pp-mori">
                   Handcrafted Whipped<br /> Perfection
