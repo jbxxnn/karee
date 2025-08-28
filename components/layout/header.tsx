@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { CartButton } from '@/components/cart/cart-button';
-import { ThemeSwitcher } from '@/components/theme-switcher';
+// import { ThemeSwitcher } from '@/components/theme-switcher';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -52,7 +52,7 @@ export function Header() {
           {/* Right Section - Utility Icons */}
           <div className="flex items-center justify-end space-x-4 sm:space-x-6 ml-auto">
             <CartButton />
-            <ThemeSwitcher />
+            {/* <ThemeSwitcher /> */}
           </div>
 
         </div>

@@ -22,7 +22,7 @@ export default function Home() {
                   <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-brand-black mb-6 font-pp-mori">
                   Handcrafted Whipped<br /> Perfection
                   </h2>
-                  <p className="text-sm font-pp-mori mb-12">At Kareè, we believe beauty should be simple, pure, and empowering. <br />
+                  <p className="text-sm font-pp-mori mb-12 w-[100%] lg:w-[30%]">At Kareè, we believe beauty should be simple, pure, and empowering.
                   Every jar combines nature’s healing power with modern luxury — no shortcuts, no compromises.</p>
                 </div>
                 <ProductHome />
