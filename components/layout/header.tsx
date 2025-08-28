@@ -50,7 +50,7 @@ export function Header() {
           </div>
 
           {/* Right Section - Utility Icons */}
-          <div className="flex items-center justify-end space-x-4 sm:space-x-6 ml-auto">
+          <div className="flex items-center justify-end space-x-4 sm:space-x-6 ml-auto mr-5">
             <CartButton />
             {/* <ThemeSwitcher /> */}
           </div>
