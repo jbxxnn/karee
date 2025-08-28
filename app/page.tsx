@@ -20,7 +20,7 @@ export default function Home() {
             <Separator className="bg-brand-black/5" />
             <div className="w-full flex flex-col gap-2 p-3 md:p-5">
                 <div className="text-left">
-                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-brand-black mb-6 font-pp-mori">
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-brand-black mb-6 font-pp-mori">
                   Handcrafted Whipped<br /> Perfection
                   </h2>
                   <p className="text-sm font-pp-mori mb-12 w-[100%] lg:w-[30%]">At Kareè, we believe beauty should be simple, pure, and empowering.

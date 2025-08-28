@@ -3,7 +3,7 @@ import Image from "next/image";
 export function WhyKaree() {
   return (
         <div className="flex flex-col sm:flex-row gap-2 items-center h-auto md:h-[23rem] w-full p-3 md:p-5">
-        <div className="flex flex-col gap-2 items-center w-[100%] md:w-[65%] bg-brand-secondary h-full overflow-hidden justify-center">
+        <div className="flex flex-col gap-2 items-center w-[100%] md:w-[65%] bg-brand-secondary h-[20rem] md:h-full overflow-hidden justify-center">
             <Image 
             src="/home-3-2.jpg" 
             alt="Why Karee" 
