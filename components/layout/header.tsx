@@ -87,7 +87,7 @@ export function Header() {
 
         {/* Mobile Menu */}
         <div 
-          className={`lg:hidden fixed bottom-10 left-1/2 transform -translate-x-1/2 h-[60%] w-[90%] max-w-sm bg-white dark:bg-gray-900 shadow-2xl transition-transform duration-300 ease-in-out z-50 rounded-lg ${
+          className={`lg:hidden fixed bottom-0 left-1/2 transform -translate-x-1/2 h-[60%] w-[100%] max-w-sm bg-white dark:bg-gray-900 shadow-2xl transition-transform duration-300 ease-in-out z-50 ${
             isMobileMenuOpen ? 'translate-y-0' : 'translate-y-full'
           }`}
         >

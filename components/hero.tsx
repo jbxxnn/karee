@@ -4,7 +4,7 @@ export function Hero() {
   return (
     <div className="flex flex-col gap-2 items-center">
       <div 
-        className="relative flex flex-col gap-4 items-center justify-center h-[40rem] w-full overflow-hidden"
+        className="relative flex flex-col gap-4 items-center justify-center h-[25rem] md:h-[40rem] w-full overflow-hidden"
         style={{
           backgroundImage: 'url(/home-4-2.jpg)',
           backgroundSize: 'cover',
