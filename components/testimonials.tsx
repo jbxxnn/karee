@@ -7,7 +7,7 @@ export function InfiniteMovingCardsDemo() {
     <div className="h-[40rem] rounded-md flex flex-col antialiased bg-brand-cream items-center justify-center relative overflow-hidden">
       <InfiniteMovingCards
         items={testimonials}
-        direction="right"
+        direction="left"
         speed="slow"
       />
     </div>
@@ -17,31 +17,31 @@ export function InfiniteMovingCardsDemo() {
 const testimonials = [
   {
     quote:
-      "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair.",
-    name: "Charles Dickens",
-    title: "A Tale of Two Cities",
+      "I’ve struggled with dry patches for years, but Kareè whipped shea butter leaves my skin so soft and glowing. It melts right in without feeling greasy.",
+    name: "Amina I.",
+    title: "⭐⭐⭐⭐⭐",
   },
   {
     quote:
-      "To be, or not to be, that is the question: Whether 'tis nobler in the mind to suffer The slings and arrows of outrageous fortune, Or to take Arms against a Sea of troubles, And by opposing end them: to die, to sleep.",
-    name: "William Shakespeare",
-    title: "Hamlet",
+      "The texture is unreal—like a silky cloud! I use it every night and wake up with hydrated, radiant skin. The packaging also feels so premium, I love having it on my dresser.",
+    name: "Zara A.",
+    title: "⭐⭐⭐⭐⭐",
   },
   {
-    quote: "All that we see or seem is but a dream within a dream.",
-    name: "Edgar Allan Poe",
-    title: "A Dream Within a Dream",
-  },
-  {
-    quote:
-      "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
-    name: "Jane Austen",
-    title: "Pride and Prejudice",
+    quote: "My elbows, heels, and even my cuticles used to be so dry. After just two weeks of using Kareè, my skin is smooth and nourished. A little goes a long way!",
+    name: "Ifeoma O.",
+    title: "⭐⭐⭐⭐⭐",
   },
   {
     quote:
-      "Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world.",
-    name: "Herman Melville",
-    title: "Moby-Dick",
+      "I use it on my hair, my body, and even as a lip balm. It’s multipurpose and 100% natural, which makes it perfect for my sensitive skin.",
+    name: "Jennifer M.",
+    title: "⭐⭐⭐⭐⭐",
+  },
+  {
+    quote:
+      "I’ve tried other shea butters, but Kareè is on another level. The whipping makes it so much lighter and easier to apply. It feels like true luxury skincare without the crazy price tag.",
+    name: "Adeola P.",
+    title: "⭐⭐⭐⭐⭐",
   },
 ];

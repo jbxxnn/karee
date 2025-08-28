@@ -2,6 +2,7 @@
 
 import { ReactNode } from 'react';
 import { Header } from './header';
+import { Footer } from './footer';
 import { CartDrawer } from '@/components/cart/cart-drawer';
 
 interface LayoutProps {
@@ -11,9 +12,12 @@ interface LayoutProps {
 
 export function Layout({ children, showHeader = true }: LayoutProps) {
   return (
-    <div className="min-h-screen bg-brand-cream">
+    <div className="min-h-screen bg-brand-cream flex flex-col">
       {showHeader && <Header />}
-      {children}
+      <main className="flex-1">
+        {children}
+      </main>
+      <Footer />
       <CartDrawer />
     </div>
   );
