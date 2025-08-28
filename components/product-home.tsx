@@ -8,7 +8,7 @@ import {
 
 export function ProductHome() {
   return (
-    <BentoGrid className="w-full px-4 md:px-6 lg:px-6">
+    <BentoGrid className="w-full px-0 md:px-6 lg:px-6">
       {items.map((item, i) => (
         <BentoGridItem
           key={i}
