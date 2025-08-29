@@ -19,8 +19,8 @@ export default function Home() {
             <About />
             <div className="w-full flex flex-col gap-2 p-[10rem] px-3 bg-brand-black">
                 <div className="text-center">
-                  <h2 className="text-4xl uppercase md:text-5xl lg:text-6xl font-semibold text-brand-cream mb-6 font-pp-mori">
-                  Handcrafted Whipped<br /> Perfection
+                  <h2 className="text-5xl uppercase md:text-6xl lg:text-7xl font-ultrabold text-brand-cream mb-6">
+                  Whipped <br /> Perfection
                   </h2>
                   <p className="text-sm font-pp-mori m-auto mb-12 w-[100%] lg:w-[30%] text-brand-cream">At Kareè, we believe beauty should be simple, pure, and empowering.
                   Every jar combines nature’s healing power with modern luxury — no shortcuts, no compromises.</p>
