@@ -16,25 +16,25 @@ export function Header() {
           <nav className="hidden lg:flex text-brand-black items-center space-x-6 xl:space-x-8 font-pp-mori">
             <Link 
               href="/products" 
-              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-sm"
+              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-xs uppercase font-ultrabold"
             >
               shop
             </Link>
             <Link 
               href="/cart" 
-              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-sm"
+              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-xs uppercase font-ultrabold"
             >
               about us
             </Link>
             <Link 
               href="/cart" 
-              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-sm"
+              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-xs uppercase font-ultrabold"
             >
               collections
             </Link>
             <Link 
               href="/checkout" 
-              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-sm"
+              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-xs uppercase font-ultrabold"
             >
               support
             </Link>
