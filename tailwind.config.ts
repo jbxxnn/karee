@@ -25,8 +25,8 @@ export default {
       },
       colors: {
         brand: {
-          cream: "#EEEDE6",
-          black: "#3b3b3b",
+          cream: "#decca8",
+          black: "#272626",
           secondary: "#e7dbcd",
         },
         background: "hsl(var(--background))",

@@ -5,7 +5,6 @@ import { SignUpUserSteps } from "@/components/tutorial/sign-up-user-steps";
 import { hasEnvVars } from "@/lib/utils";
 import { Layout } from "@/components/layout/layout";
 import { About } from "@/components/about";
-import { Separator } from "@/components/ui/separator";
 import { ProductHome } from "@/components/product-home";
 import { WhyKaree } from "@/components/why-karee";
 import { InfiniteMovingCardsDemo } from "@/components/testimonials";
@@ -18,18 +17,16 @@ export default function Home() {
           <div className="w-full flex-1 flex flex-col gap-20 p-0">
             <Hero />
             <About />
-            <Separator className="bg-brand-black/5" />
-            <div className="w-full flex flex-col gap-2 p-3 md:p-5">
-                <div className="text-left">
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-brand-black mb-6 font-pp-mori">
+            <div className="w-full flex flex-col gap-2 p-[10rem] px-3 bg-brand-black">
+                <div className="text-center">
+                  <h2 className="text-4xl uppercase md:text-5xl lg:text-6xl font-semibold text-brand-cream mb-6 font-pp-mori">
                   Handcrafted Whipped<br /> Perfection
                   </h2>
-                  <p className="text-sm font-pp-mori mb-12 w-[100%] lg:w-[30%]">At Kareè, we believe beauty should be simple, pure, and empowering.
+                  <p className="text-sm font-pp-mori m-auto mb-12 w-[100%] lg:w-[30%] text-brand-cream">At Kareè, we believe beauty should be simple, pure, and empowering.
                   Every jar combines nature’s healing power with modern luxury — no shortcuts, no compromises.</p>
                 </div>
                 <ProductHome />
             </div>
-            <Separator className="bg-brand-black/5" />
             <div className="w-full flex flex-col gap-2 p-3 md:p-5">
                 <div className="text-center ">
                   <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-brand-black mb-6 font-pp-mori">

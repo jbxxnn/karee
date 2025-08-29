@@ -9,11 +9,11 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-brand-cream dark:bg-gray-900 shadow-sm">
+    <header className="sticky top-0 z-50 w-full bg-brand-cream dark:bg-gray-900 shadow-sm border-b border-brand-black">
       <div className="mx-auto px-4 sm:px-6 lg:px-12">
         <div className="relative flex items-center justify-between h-16">
           {/* Left Section - Navigation Links (Hidden on mobile) */}
-          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8 font-pp-mori">
+          <nav className="hidden lg:flex text-brand-black items-center space-x-6 xl:space-x-8 font-pp-mori">
             <Link 
               href="/products" 
               className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-sm"
@@ -43,7 +43,7 @@ export function Header() {
           {/* Center Section - Brand Logo/Title */}
           <div className="absolute left-1/2 transform -translate-x-1/2 flex justify-center items-center">
             <Link href="/" className="flex items-center">
-              <h1 className="text-2xl sm:text-2xl text-gray-900 dark:text-white">
+              <h1 className="text-2xl md:text-3xl text-gray-900 dark:text-white">
                 kareè
               </h1>
             </Link>

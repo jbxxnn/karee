@@ -91,10 +91,10 @@ export default function ProductPage() {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto">
         {/* Breadcrumb */}
-        <nav className="mb-6">
-          <ol className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
+        {/* <nav className="mb-6">
+          <ol className="flex items-center space-x-2 text-sm text-brand-black dark:text-brand-black">
             <li>
               <Link href="/" className="hover:text-gray-900 dark:hover:text-gray-100">
                 Home
@@ -124,7 +124,7 @@ export default function ProductPage() {
               {product.name}
             </li>
           </ol>
-        </nav>
+        </nav> */}
 
         {/* Product Detail */}
         <ProductDetail product={product} />

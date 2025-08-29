@@ -175,6 +175,39 @@ export class ProductService {
       return [];
     }
   }
+
+  async getRandomRelatedProduct(categoryId: string, excludeProductId: string): Promise<ProductWithImages | null> {
+    try {
+      const { data, error } = await this.supabase
+        .from('products')
+        .select(`
+          *,
+          product_images (*),
+          category:categories (
+            id,
+            name,
+            slug
+          )
+        `)
+        .eq('is_active', true)
+        .eq('category_id', categoryId)
+        .neq('id', excludeProductId)
+        .limit(1);
+
+      if (error) throw error;
+      
+      // If we have data, randomly select one product
+      if (data && data.length > 0) {
+        const randomIndex = Math.floor(Math.random() * data.length);
+        return data[randomIndex];
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('Error fetching random related product:', error);
+      return null;
+    }
+  }
 }
 
 export const productService = new ProductService();
