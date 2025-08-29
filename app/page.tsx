@@ -1,13 +1,13 @@
 import { Hero } from "@/components/hero";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import { ConnectSupabaseSteps } from "@/components/tutorial/connect-supabase-steps";
-import { SignUpUserSteps } from "@/components/tutorial/sign-up-user-steps";
-import { hasEnvVars } from "@/lib/utils";
+// import { ThemeSwitcher } from "@/components/theme-switcher";
+// import { ConnectSupabaseSteps } from "@/components/tutorial/connect-supabase-steps";
+// import { SignUpUserSteps } from "@/components/tutorial/sign-up-user-steps";
+// import { hasEnvVars } from "@/lib/utils";
 import { Layout } from "@/components/layout/layout";
 import { About } from "@/components/about";
 import { ProductHome } from "@/components/product-home";
-import { WhyKaree } from "@/components/why-karee";
-import { InfiniteMovingCardsDemo } from "@/components/testimonials";
+// import { WhyKaree } from "@/components/why-karee";
+// import { InfiniteMovingCardsDemo } from "@/components/testimonials";
 
 export default function Home() {
   return (
@@ -27,7 +27,7 @@ export default function Home() {
                 </div>
                 <ProductHome />
             </div>
-            <div className="w-full flex flex-col gap-2 p-3 md:p-5">
+            {/* <div className="w-full flex flex-col gap-2 p-3 md:p-5">
                 <div className="text-center ">
                   <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-brand-black mb-6 font-pp-mori">
                   Hydration. Softness. Glow.
@@ -40,10 +40,10 @@ export default function Home() {
             <main className="flex-1 flex flex-col gap-6 px-4">
               <h2 className="font-medium text-xl mb-4">Next steps</h2>
               {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-            </main>
-          </div>
+            </main>*/}
+          </div> 
 
-          <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
+          {/* <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
             <p>
               Powered by{" "}
               <a
@@ -56,7 +56,7 @@ export default function Home() {
               </a>
             </p>
             <ThemeSwitcher />
-          </footer>
+          </footer> */}
         </div>
       </main>
     </Layout>
