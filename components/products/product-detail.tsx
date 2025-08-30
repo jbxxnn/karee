@@ -61,11 +61,11 @@ export function ProductDetail({ product }: ProductDetailProps) {
     <>
       {/* SECTION 1: Main Product Section */}
       <motion.div 
-        className="flex flex-col lg:flex-row gap-0 mb-12 items-start pl-0 pt-0 bg-white"
+        className="flex flex-col lg:flex-row gap-0 border-b border-brand-black items-start pl-0 pt-0 bg-white"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-      >
+       >
         {/* Left Column - Product Images */}
         <motion.div 
           className="lg:w-[63%]"
@@ -287,41 +287,48 @@ export function ProductDetail({ product }: ProductDetailProps) {
 
       {/* SECTION 2: Product Benefits Section - COMPLETELY SEPARATE */}
       <motion.div 
-        className="w-full bg-white py-16 px-8"
+        className="w-full bg-white py-[7rem] px-8"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut", delay: 2.4 }}
       >
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-3 gap-12 items-start">
+          <div className="grid items-start">
             {/* Left Column - Product Image */}
-            <div className="flex justify-center lg:justify-start">
+            {/* <div className="flex justify-center lg:justify-start relative">
               <div className="relative w-32 h-32 bg-brand-cream rounded-full flex items-center justify-center">
                 <div className="w-20 h-20 bg-gradient-to-br from-amber-200 to-amber-400 rounded-full flex items-center justify-center">
                   <div className="w-16 h-12 bg-gradient-to-br from-amber-600 to-amber-800 rounded-lg"></div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Center Column - Main Content */}
             <div className="text-center space-y-6">
               {/* Decorative Symbol */}
               <div className="flex justify-center">
-                <div className="w-8 h-8 relative">
-                  <div className="absolute inset-0 border-2 border-brand-black transform rotate-45"></div>
-                  <div className="absolute inset-0 border-2 border-brand-black transform -rotate-45"></div>
-                  <div className="absolute inset-0 border-2 border-brand-black transform rotate-90"></div>
-                </div>
+              <svg  
+              width="83" 
+              height="92" 
+              viewBox="0 0 83 92" 
+              fill="none" 
+              xmlns="http://www.w3.org/2000/svg" 
+              >
+                <path 
+                d="M83 23.974L43.8141 45.8502L83 68.0261L82.0744 69.8241L42.5799 47.9479V92H40.4201V47.9479L1.2342 69.8241L0 68.0261L39.4944 45.8502L0 23.974L1.2342 22.1759L40.4201 44.0521V0H42.5799V44.0521L82.0744 22.1759L83 23.974Z" 
+                fill="#3B3B3B">
+                  </path>
+                  </svg>
               </div>
 
               {/* Main Description */}
-              <h2 className="text-2xl lg:text-3xl font-pp-mori font-medium text-brand-black leading-relaxed max-w-2xl mx-auto">
-                A boost of anti-oxidant rich nourishing <em className="italic">renewal</em> for dull, dry and tired skin.
+              <h2 className="text-4xl lg:text-5xl font-pp-mori font-medium text-brand-black mx-auto">
+              At Kareè, we believe skincare is a ritual. That’s why our shea butter is hand-whipped in small batches to achieve a luxurious, cloud-like texture.
               </h2>
             </div>
 
             {/* Right Column - Product Drops Image */}
-            <div className="flex justify-center lg:justify-end">
+            {/* <div className="flex justify-center lg:justify-end relative">
               <div className="relative w-32 h-32 bg-brand-cream rounded-full flex items-center justify-center">
                 <div className="w-20 h-20 bg-gradient-to-br from-amber-200 to-amber-400 rounded-full flex items-center justify-center relative">
                   <div className="absolute -top-2 -right-2 w-3 h-3 bg-amber-300 rounded-full"></div>
@@ -329,18 +336,19 @@ export function ProductDetail({ product }: ProductDetailProps) {
                   <div className="absolute bottom-2 right-2 w-2.5 h-2.5 bg-amber-500 rounded-full"></div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Bottom Sections */}
           <div className="grid lg:grid-cols-2 gap-12 mt-16">
             {/* RECOMMENDED FOR Section */}
             <motion.div 
-              className="space-y-4"
+              className="space-y-4 grid lg:grid-cols-2 gap-12"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, ease: "easeOut", delay: 2.6 }}
             >
+              <div>
               <h3 className="text-lg font-pp-mori font-bold text-brand-black uppercase tracking-wide">
                 Recommended For
               </h3>
@@ -358,6 +366,28 @@ export function ProductDetail({ product }: ProductDetailProps) {
                   </li>
                 ))}
               </ul>
+              </div>
+              <div>
+              <h3 className="text-lg font-pp-mori font-bold text-brand-black uppercase tracking-wide">
+                Good to Know
+              </h3>
+              <ul className="space-y-2">
+                {[
+                  "pH: 4.8",
+                  "Clean, verified ingredients",
+                  "Vegan, Cruelty-free",
+                  "No Artificial colours added",
+                  "For all skin-types"
+                ].map((feature, index) => (
+                  <li key={index} className="flex items-center text-brand-black">
+                    <span className="w-2 h-2 bg-brand-black rounded-full mr-3 flex items-center justify-center">
+                      <span className="text-white text-xs">✓</span>
+                    </span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              </div>
             </motion.div>
 
             {/* GOOD TO KNOW Section */}

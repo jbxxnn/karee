@@ -31,6 +31,19 @@ export function Header() {
     };
   }, [lastScrollY]);
 
+  // Add padding to body when header is hidden to prevent content jump
+  useEffect(() => {
+    if (isVisible) {
+      document.body.style.paddingTop = '0px';
+    } else {
+      document.body.style.paddingTop = '64px'; // 64px = header height (h-16)
+    }
+
+    return () => {
+      document.body.style.paddingTop = '0px';
+    };
+  }, [isVisible]);
+
   return (
     <header className={`fixed top-0 z-50 w-full bg-brand-cream dark:bg-gray-900 shadow-sm border-b border-brand-black transition-transform duration-300 ease-in-out ${
       isVisible ? 'translate-y-0' : '-translate-y-full'
@@ -82,11 +95,11 @@ export function Header() {
 
         </div>
 
-        {/* Mobile Menu Button - Positioned absolutely for mobile */}
+        {/* Mobile Menu Button - Positioned for mobile */}
         <button
           type="button"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="lg:hidden absolute top-4 left-4 p-2 z-10"
+          className="lg:hidden absolute top-4 left-4 p-2 z-[80]"
           aria-label="Toggle mobile menu"
         >
           <div className={`navbar-hamburger ${isMobileMenuOpen ? 'active' : ''}`}>
@@ -96,26 +109,25 @@ export function Header() {
         </button>
 
         {/* Mobile Menu Overlay */}
-        <div 
-          className={`lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-300 z-40 ${
-            isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          }`}
-          style={{
-            backgroundImage: `
-              linear-gradient(45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.03) 75%),
-              linear-gradient(-45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.03) 75%)
-            `,
-            backgroundSize: '6px 6px'
-          }}
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
+        {isMobileMenuOpen && (
+          <div 
+            className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-300 z-[60]"
+            style={{
+              backgroundImage: `
+                linear-gradient(45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.03) 75%),
+                linear-gradient(-45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.03) 75%)
+              `,
+              backgroundSize: '6px 6px'
+            }}
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
 
         {/* Mobile Menu */}
-        <div 
-          className={`lg:hidden fixed bottom-0 left-1/2 transform -translate-x-1/2 h-[60%] w-[100%] max-w-sm bg-white dark:bg-gray-900 shadow-2xl transition-transform duration-300 ease-in-out z-50 ${
-            isMobileMenuOpen ? 'translate-y-0' : 'translate-y-full'
-          }`}
-        >
+        {isMobileMenuOpen && (
+          <div 
+            className="lg:hidden fixed bottom-0 left-1/2 transform -translate-x-1/2 h-[60%] w-[100%] max-w-sm bg-white dark:bg-gray-900 shadow-2xl transition-transform duration-300 ease-in-out z-[70]"
+          >
           {/* Menu Header */}
           <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Menu</h2>
@@ -171,6 +183,7 @@ export function Header() {
             </div>
           </div>
         </div>
+        )}
       </div>
       {/* <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent mb-2" /> */}
     </header>
