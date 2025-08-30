@@ -31,23 +31,14 @@ export function Header() {
     };
   }, [lastScrollY]);
 
-  // Add padding to body when header is hidden to prevent content jump
-  useEffect(() => {
-    if (isVisible) {
-      document.body.style.paddingTop = '0px';
-    } else {
-      document.body.style.paddingTop = '64px'; // 64px = header height (h-16)
-    }
 
-    return () => {
-      document.body.style.paddingTop = '0px';
-    };
-  }, [isVisible]);
 
   return (
     <header className={`fixed top-0 z-50 w-full bg-brand-cream dark:bg-gray-900 shadow-sm border-b border-brand-black transition-transform duration-300 ease-in-out ${
       isVisible ? 'translate-y-0' : '-translate-y-full'
     }`}>
+      {/* Spacer div to prevent content jump */}
+      <div className="h-16" />
       <div className="mx-auto px-4 sm:px-6 lg:px-12">
         <div className="relative flex items-center justify-between h-16">
           {/* Left Section - Navigation Links (Hidden on mobile) */}
