@@ -68,7 +68,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
        >
         {/* Left Column - Product Images */}
         <motion.div 
-          className="lg:w-[63%]"
+          className="hidden md:block lg:w-[63%]"
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
@@ -84,16 +84,20 @@ export function ProductDetail({ product }: ProductDetailProps) {
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
         >
           <div className="lg:h-screen">
-            <div className="space-y-2 bg-white p-[4rem] pt-[10rem] w-full h-screen">
+            <div className="space-y-2 bg-white p-[2rem] md:p-[4rem] pt-[6rem] md:pt-[10rem] w-full min-h-[100vh]">
               {/* Product Name */}
               <motion.h1 
-                className="text-5xl font-pp-mori font-bold text-brand-black dark:text-brand-black"
+                className="text-3xl md:text-5xl uppercase font-pp-mori font-bold text-brand-black dark:text-brand-black"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
               >
                 {product.name}
               </motion.h1>
+
+              <div className="md:hidden !mb-10">
+                <ProductGallery images={product.product_images} />
+              </div>
 
               {/* Price */}
               <motion.div 
@@ -123,6 +127,8 @@ export function ProductDetail({ product }: ProductDetailProps) {
                   </p>
                 )}
               </motion.div>
+
+              
 
               <motion.div 
                 className="space-y-2"
@@ -178,9 +184,9 @@ export function ProductDetail({ product }: ProductDetailProps) {
                    <Plus size={16} />
                   </Button>
                 </div>
-              </motion.div>
 
-              <motion.div
+                <motion.div
+                className="w-full"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut", delay: 1.6 }}
@@ -205,6 +211,9 @@ export function ProductDetail({ product }: ProductDetailProps) {
                   )}
                 </Button>
               </motion.div>
+              </motion.div>
+
+              
 
               {/* Product Benefits List */}
               <motion.div 
@@ -243,11 +252,11 @@ export function ProductDetail({ product }: ProductDetailProps) {
                     { label: "DETAILS", value: "Flowery, bright, fruity. For filter." },
                     { label: "WEIGHT", value: "200 g (7,05 oz)" }
                   ].map((spec, index) => (
-                    <div key={index} className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+                    <div key={index} className="flex flex-col md:flex-row justify-between py-2 pb-4 md:pb-0 border-b border-gray-200 dark:border-gray-700">
                       <span className="font-bold text-gray-900 dark:text-gray-100 uppercase text-sm">
                         {spec.label}
                       </span>
-                      <span className="text-gray-600 dark:text-gray-400 text-sm">
+                      <span className="text-gray-600 dark:text-gray-400 text-xs md:text-sm">
                         {spec.value}
                       </span>
                     </div>
@@ -322,8 +331,8 @@ export function ProductDetail({ product }: ProductDetailProps) {
               </div>
 
               {/* Main Description */}
-              <h2 className="text-4xl lg:text-5xl font-pp-mori font-medium text-brand-black mx-auto">
-              At Kareè, we believe skincare is a ritual. That’s why our shea butter is hand-whipped in small batches to achieve a luxurious, cloud-like texture.
+              <h2 className="text-4xl lg:text-5xl font-pp-mori font-medium text-brand-black max-w-4xl mx-auto">
+              Our shea butter is hand-whipped in small batches to achieve a <span className="font-pp-editorial italic">luxurious,</span> cloud-like texture.
               </h2>
             </div>
 
@@ -340,19 +349,19 @@ export function ProductDetail({ product }: ProductDetailProps) {
           </div>
 
           {/* Bottom Sections */}
-          <div className="grid lg:grid-cols-2 gap-12 mt-16">
+          <div className="grid lg:grid-cols-4 gap-12 mt-16">
             {/* RECOMMENDED FOR Section */}
             <motion.div 
-              className="space-y-4 grid lg:grid-cols-2 gap-12"
+              className="space-y-0 grid col-span-2 lg:grid-cols-2 gap-0"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, ease: "easeOut", delay: 2.6 }}
             >
               <div>
-              <h3 className="text-lg font-pp-mori font-bold text-brand-black uppercase tracking-wide">
+              <h3 className="text-sm font-pp-mori font-normal text-brand-black uppercase tracking-wide mb-4">
                 Recommended For
               </h3>
-              <ul className="space-y-2">
+              <ul className="space-y-0">
                 {[
                   "Dull Skin",
                   "Hyper Pigmentation", 
@@ -360,18 +369,18 @@ export function ProductDetail({ product }: ProductDetailProps) {
                   "Excess Oil",
                   "Enlarged Pores"
                 ].map((concern, index) => (
-                  <li key={index} className="flex items-center text-brand-black">
-                    <span className="w-2 h-2 bg-brand-black rounded-full mr-3"></span>
+                  <li key={index} className="flex items-center text-brand-black text-xs">
+                    <span className="w-1 h-1 bg-brand-black rounded-full mr-3"></span>
                     {concern}
                   </li>
                 ))}
               </ul>
               </div>
-              <div>
-              <h3 className="text-lg font-pp-mori font-bold text-brand-black uppercase tracking-wide">
+              <div className="!mt-10 !md:mt-0">
+              <h3 className="text-sm font-pp-mori font-normal text-brand-black uppercase tracking-wide mb-4">
                 Good to Know
               </h3>
-              <ul className="space-y-2">
+              <ul className="space-y-0">
                 {[
                   "pH: 4.8",
                   "Clean, verified ingredients",
@@ -379,10 +388,8 @@ export function ProductDetail({ product }: ProductDetailProps) {
                   "No Artificial colours added",
                   "For all skin-types"
                 ].map((feature, index) => (
-                  <li key={index} className="flex items-center text-brand-black">
-                    <span className="w-2 h-2 bg-brand-black rounded-full mr-3 flex items-center justify-center">
-                      <span className="text-white text-xs">✓</span>
-                    </span>
+                  <li key={index} className="flex items-center text-brand-black text-xs">
+                    <span className="w-1 h-1 bg-brand-black rounded-full mr-3"></span>
                     {feature}
                   </li>
                 ))}
@@ -397,25 +404,6 @@ export function ProductDetail({ product }: ProductDetailProps) {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, ease: "easeOut", delay: 2.8 }}
             >
-              <h3 className="text-lg font-pp-mori font-bold text-brand-black uppercase tracking-wide">
-                Good to Know
-              </h3>
-              <ul className="space-y-2">
-                {[
-                  "pH: 4.8",
-                  "Clean, verified ingredients",
-                  "Vegan, Cruelty-free",
-                  "No Artificial colours added",
-                  "For all skin-types"
-                ].map((feature, index) => (
-                  <li key={index} className="flex items-center text-brand-black">
-                    <span className="w-2 h-2 bg-brand-black rounded-full mr-3 flex items-center justify-center">
-                      <span className="text-white text-xs">✓</span>
-                    </span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
             </motion.div>
           </div>
         </div>
