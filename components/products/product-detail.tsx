@@ -68,7 +68,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
        >
         {/* Left Column - Product Images */}
         <motion.div 
-          className="hidden md:block lg:w-[63%]"
+          className="hidden md:block w-full lg:w-[63%]"
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
@@ -78,7 +78,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
 
         {/* Right Column - Product Info */}
         <motion.div 
-          className="lg:sticky lg:top-0 lg:w-[37%] lg:flex lg:justify-end"
+          className="lg:sticky lg:top-0 w-full lg:w-[37%] lg:flex lg:justify-end"
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
@@ -383,7 +383,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                 ))}
               </ul>
               </div>
-              <div className="!mt-10 !md:mt-0">
+              <div className="!mt-10 md:!mt-0">
               <h3 className="text-sm font-pp-mori font-normal text-brand-black uppercase tracking-wide mb-4">
                 Good to Know
               </h3>
