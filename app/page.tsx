@@ -17,7 +17,7 @@ export default function Home() {
           <div className="w-full flex-1 flex flex-col gap-20 p-0">
             <Hero />
             <About />
-            <div className="w-full flex flex-col gap-2 p-[10rem] px-3 bg-brand-black">
+            <div className="w-full flex flex-col gap-2 p-[5rem] px-3 bg-brand-black">
                 <div className="text-center">
                   <h2 className="text-5xl uppercase md:text-6xl lg:text-7xl font-ultrabold text-brand-cream mb-6">
                   Whipped <br /> Perfection

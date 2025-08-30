@@ -1,15 +1,40 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { CartButton } from '@/components/cart/cart-button';
 // import { ThemeSwitcher } from '@/components/theme-switcher';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Show header when scrolling up, hide when scrolling down
+      if (currentScrollY < lastScrollY) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-brand-cream dark:bg-gray-900 shadow-sm border-b border-brand-black">
+    <header className={`fixed top-0 z-50 w-full bg-brand-cream dark:bg-gray-900 shadow-sm border-b border-brand-black transition-transform duration-300 ease-in-out ${
+      isVisible ? 'translate-y-0' : '-translate-y-full'
+    }`}>
       <div className="mx-auto px-4 sm:px-6 lg:px-12">
         <div className="relative flex items-center justify-between h-16">
           {/* Left Section - Navigation Links (Hidden on mobile) */}

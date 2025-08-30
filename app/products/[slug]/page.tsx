@@ -91,7 +91,7 @@ export default function ProductPage() {
 
   return (
     <Layout>
-      <div className="container mx-auto">
+      <div className="mx-auto">
         {/* Breadcrumb */}
         {/* <nav className="mb-6">
           <ol className="flex items-center space-x-2 text-sm text-brand-black dark:text-brand-black">
