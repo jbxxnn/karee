@@ -84,10 +84,10 @@ export function ProductDetail({ product }: ProductDetailProps) {
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
         >
           <div className="lg:h-screen">
-            <div className="space-y-2 bg-white p-[2rem] md:p-[4rem] pt-[6rem] md:pt-[10rem] w-full min-h-[100vh]">
+            <div className="space-y-2 bg-white p-[2rem] md:p-[4rem] py-[6rem] md:py-[10rem] w-full min-h-[100vh]">
               {/* Product Name */}
               <motion.h1 
-                className="text-3xl md:text-5xl uppercase font-pp-mori font-bold text-brand-black dark:text-brand-black"
+                className="text-2xl md:text-5xl uppercase font-geist font-ultrabold text-brand-black dark:text-brand-black mb-6 md:mb-0"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
@@ -195,7 +195,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                   onClick={handleAddToCart}
                   disabled={isAddingToCart || product.stock_quantity <= 0}
                   size="lg"
-                  className="w-full text-white py-6 bg-brand-black rounded-none shadow-sm hover:text-brand-black hover:bg-white hover:border-brand-black hover:border transition-all duration-200"
+                  className="w-full text-white py-6 bg-brand-black rounded-none shadow-sm hover:text-brand-black border-brand-black border hover:bg-white hover:border-brand-black hover:border transition-all duration-200"
                 >
                   {isAddingToCart ? (
                     <div className="flex items-center gap-2">
@@ -251,8 +251,15 @@ export function ProductDetail({ product }: ProductDetailProps) {
                     { label: "VARIETY", value: "Arabica Heirloom, light roast, natural process" },
                     { label: "DETAILS", value: "Flowery, bright, fruity. For filter." },
                     { label: "WEIGHT", value: "200 g (7,05 oz)" }
-                  ].map((spec, index) => (
-                    <div key={index} className="flex flex-col md:flex-row justify-between py-2 pb-4 md:pb-0 border-b border-gray-200 dark:border-gray-700">
+                  ].map((spec, index, array) => (
+                    <div 
+                      key={index} 
+                      className={`flex flex-col md:flex-row justify-between py-2 pb-4 md:pb-0 ${
+                        index === array.length - 1 
+                          ? '' 
+                          : 'border-b border-gray-200 dark:border-gray-700'
+                      }`}
+                    >
                       <span className="font-bold text-gray-900 dark:text-gray-100 uppercase text-sm">
                         {spec.label}
                       </span>

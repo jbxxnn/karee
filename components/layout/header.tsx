@@ -37,37 +37,51 @@ export function Header() {
     <header className={`fixed top-0 z-50 w-full bg-brand-cream dark:bg-gray-900 shadow-sm border-b border-brand-black transition-transform duration-300 ease-in-out ${
       isVisible ? 'translate-y-0' : '-translate-y-full'
     }`}>
-      {/* Spacer div to prevent content jump */}
-      <div className="h-16" />
       <div className="mx-auto px-4 sm:px-6 lg:px-12">
         <div className="relative flex items-center justify-between h-16">
-          {/* Left Section - Navigation Links (Hidden on mobile) */}
-          <nav className="hidden lg:flex text-brand-black items-center space-x-6 xl:space-x-8 font-pp-mori">
-            <Link 
-              href="/products" 
-              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-xs uppercase font-ultrabold"
+          {/* Left Section - Mobile Menu Button + Desktop Navigation */}
+          <div className="flex items-center">
+            {/* Mobile Menu Button */}
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2 mr-4"
+              aria-label="Toggle mobile menu"
             >
-              shop
-            </Link>
-            <Link 
-              href="/cart" 
-              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-xs uppercase font-ultrabold"
-            >
-              about us
-            </Link>
-            <Link 
-              href="/cart" 
-              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-xs uppercase font-ultrabold"
-            >
-              collections
-            </Link>
-            <Link 
-              href="/checkout" 
-              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-xs uppercase font-ultrabold"
-            >
-              support
-            </Link>
-          </nav>
+              <div className={`navbar-hamburger ${isMobileMenuOpen ? 'active' : ''}`}>
+                <div className="navbar-hamburger-line navbar-hamburger-line-1"></div>
+                <div className="navbar-hamburger-line navbar-hamburger-line-2"></div>
+              </div>
+            </button>
+            
+            {/* Desktop Navigation Links */}
+            <nav className="hidden lg:flex text-brand-black items-center space-x-6 xl:space-x-8 font-pp-mori">
+              <Link 
+                href="/products" 
+                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-xs uppercase font-ultrabold"
+              >
+                shop
+              </Link>
+              <Link 
+                href="/cart" 
+                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-xs uppercase font-ultrabold"
+              >
+                about us
+              </Link>
+              <Link 
+                href="/cart" 
+                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-xs uppercase font-ultrabold"
+              >
+                collections
+              </Link>
+              <Link 
+                href="/checkout" 
+                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-xs uppercase font-ultrabold"
+              >
+                support
+              </Link>
+            </nav>
+          </div>
 
           {/* Center Section - Brand Logo/Title */}
           <div className="absolute left-1/2 transform -translate-x-1/2 flex justify-center items-center">
@@ -85,19 +99,6 @@ export function Header() {
           </div>
 
         </div>
-
-        {/* Mobile Menu Button - Positioned for mobile */}
-        <button
-          type="button"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="lg:hidden absolute top-4 left-4 p-2 z-[80]"
-          aria-label="Toggle mobile menu"
-        >
-          <div className={`navbar-hamburger ${isMobileMenuOpen ? 'active' : ''}`}>
-            <div className="navbar-hamburger-line navbar-hamburger-line-1"></div>
-            <div className="navbar-hamburger-line navbar-hamburger-line-2"></div>
-          </div>
-        </button>
 
         {/* Mobile Menu Overlay */}
         {isMobileMenuOpen && (
