@@ -19,7 +19,6 @@ export default function ProductPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
     if (slug) {
@@ -105,7 +104,6 @@ export default function ProductPage() {
               animate={{ opacity: 0 }}
               transition={{ duration: 3, ease: "easeInOut" }}
               onAnimationComplete={() => {
-                setShowContent(true);
                 setLoading(false);
               }}
             />
