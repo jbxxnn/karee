@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ProductWithImages } from '@/lib/services/product-service';
+import { ProductWithImages, productService } from '@/lib/services/product-service';
 import { ProductGallery } from './product-gallery';
 import { ProductVariants } from './product-variants';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Minus, Plus } from 'lucide-react';
 import { useCartStore } from '@/lib/stores/cart-store';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface ProductDetailProps {
   product: ProductWithImages & {
@@ -32,9 +33,36 @@ export function ProductDetail({ product }: ProductDetailProps) {
   const [quantity, setQuantity] = useState(1);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [activeTab, setActiveTab] = useState('About');
+  const [relatedProducts, setRelatedProducts] = useState<ProductWithImages[]>([]);
+  const [loadingRelated, setLoadingRelated] = useState(true);
   
   const addToCart = useCartStore(state => state.addItem);
   const openCart = useCartStore(state => state.openCart);
+
+  // Fetch related products when component mounts
+  useEffect(() => {
+    const fetchRelatedProducts = async () => {
+      if (product.category?.id) {
+        try {
+          setLoadingRelated(true);
+          const related = await productService.getRelatedProducts(
+            product.category.id, 
+            product.id, 
+            4
+          );
+          setRelatedProducts(related);
+        } catch (error) {
+          console.error('Error fetching related products:', error);
+        } finally {
+          setLoadingRelated(false);
+        }
+      } else {
+        setLoadingRelated(false);
+      }
+    };
+
+    fetchRelatedProducts();
+  }, [product.category?.id, product.id]);
 
   const hasDiscount = product.compare_price && product.compare_price > product.price;
   const currentPrice = selectedVariant?.price || product.price;
@@ -518,7 +546,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
               {activeTab === 'About' && (
                 <>
                   {/* About The Product */}
-                <div className="flex gap-4 justify-between items-center">
+                  <div className="flex gap-4 justify-between items-center">
 
                     <div className="w-full hidden md:block">
                       <Image 
@@ -546,7 +574,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                       width={500} 
                       height={500} 
                       />
-                    </div>
+                  </div>
 
                   {/* Recommended For */}
                   <div className="flex justify-start gap-[5rem] !mt-[3rem] md:!mt-[5rem]">
@@ -690,7 +718,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
               {activeTab === 'Ingredients' && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                   {/* Left Column - Key Ingredients */}
-                  <div className="space-y-6">
+                <div className="space-y-6">
                     <div className="flex items-center justify-between">
                       <h3 className="text-xs font-bold text-brand-black">KEY INGREDIENTS</h3>
                     </div>
@@ -717,7 +745,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                           description: "This coconut-based surfactant blend provides a gentle, deep clean without disrupting the skin barrier, and is nearly 80% naturally derived and biodegradable.",
                           icon: "🥥"
                         }
-                      ].map((ingredient, index) => (
+                    ].map((ingredient, index) => (
                         <div key={index} className="bg-brand-secondary rounded-lg p-6 shadow-sm border border-gray-100">
                           <div className="flex items-center space-x-4">
                             <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-xl flex-shrink-0">
@@ -728,8 +756,8 @@ export function ProductDetail({ product }: ProductDetailProps) {
                               <p className="text-gray-600 text-xs leading-relaxed">{ingredient.description}</p>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                      </div>
+                    ))}
                     </div>
                   </div>
 
@@ -863,8 +891,8 @@ export function ProductDetail({ product }: ProductDetailProps) {
                         {
                           question: "At what age can I start using this?",
                           answer: "This product is generally safe for adults 18 and older. For younger users, consult with a dermatologist first. Always start with patch testing regardless of age."
-                        }
-                      ].map((faq, index) => (
+                      }
+                    ].map((faq, index) => (
                         <div key={index} className="border-b border-gray-200 last:border-b-0">
                           <button 
                             className="w-full flex items-center justify-between py-4 text-left hover:bg-gray-50 transition-colors"
@@ -903,8 +931,8 @@ export function ProductDetail({ product }: ProductDetailProps) {
                           >
                             <p className="text-sm text-gray-600 leading-relaxed">{faq.answer}</p>
                           </div>
-                        </div>
-                      ))}
+                      </div>
+                    ))}
                     </div>
                   </div>
 
@@ -924,6 +952,123 @@ export function ProductDetail({ product }: ProductDetailProps) {
               )}
             </motion.div>
           </div>
+        </div>
+      </motion.div>
+
+      {/* SECTION 4: Related Products */}
+      <motion.div 
+        className="w-full bg-gray-50 py-16 px-4"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 3.6 }}
+      >
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h2 className="text-4xl lg:text-5xl font-bold text-brand-black mb-4">
+              <span className="font-pp-editorial italic font-normal">Related Products</span>
+            </h2>
+          </div>
+
+          {/* Related Products Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {loadingRelated ? (
+              // Loading skeleton
+              Array.from({ length: 4 }).map((_, index) => (
+                <div key={index} className="bg-white rounded-lg shadow-sm animate-pulse">
+                  <div className="h-64 bg-gray-200 rounded-t-lg"></div>
+                  <div className="p-4 space-y-3">
+                    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                    <div className="h-6 bg-gray-200 rounded w-1/2"></div>
+                    <div className="h-4 bg-gray-200 rounded w-1/3"></div>
+                    <div className="h-8 bg-gray-200 rounded"></div>
+                  </div>
+                </div>
+              ))
+            ) : relatedProducts.length > 0 ? (
+              relatedProducts.map((product) => (
+                <Link href={`/products/${product.slug}`} key={product.id}>
+                  <motion.div
+                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer group"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 3.8 + (parseInt(product.id) * 0.1) }}
+                    whileHover={{ y: -5 }}
+                  >
+                    {/* Product Image */}
+                    <div className="relative overflow-hidden rounded-t-lg">
+                      <Image
+                        src={product.product_images?.[0]?.image_url || '/home-2.jpg'}
+                        alt={product.name}
+                        width={300}
+                        height={300}
+                        className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      {/* Category Badge */}
+                      <div className="absolute top-3 left-3">
+                        <span className="bg-brand-black text-white text-xs px-2 py-1 rounded-full font-medium">
+                          {product.category?.name || 'Product'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Product Info */}
+                    <div className="p-4">
+                      <h3 className="font-semibold text-brand-black text-sm mb-2 line-clamp-2 group-hover:text-brand-black transition-colors">
+                        {product.name}
+                      </h3>
+                      
+                      {/* Price */}
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="text-lg font-bold text-brand-black">
+                          ₦{product.price.toFixed(2)}
+                        </span>
+                        {product.compare_price && product.compare_price > product.price && (
+                          <span className="text-sm text-gray-500 line-through">
+                            ₦{product.compare_price.toFixed(2)}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Short Description */}
+                      <div className="text-xs text-gray-600 mb-4 line-clamp-2">
+                        {product.short_description || 'Product description coming soon...'}
+                      </div>
+
+                      {/* Add to Cart Button */}
+                      <button 
+                        className="w-full mt-4 bg-brand-black text-white py-2 px-4 rounded-lg hover:bg-gray-800 transition-colors duration-200 font-medium text-sm"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addToCart(product, 1);
+                          openCart();
+                        }}
+                      >
+                        Add to Cart
+                      </button>
+                    </div>
+                  </motion.div>
+                </Link>
+              ))
+            ) : (
+              // No related products found
+              <div className="col-span-full text-center py-12">
+                <p className="text-gray-500 text-lg">No related products found at the moment.</p>
+              </div>
+            )}
+          </div>
+
+          {/* View All Products Button */}
+          {/* <div className="text-center mt-12">
+            <Link href="/products">
+              <button className="inline-flex items-center gap-2 bg-white border-2 border-brand-black text-brand-black px-8 py-3 rounded-lg hover:bg-brand-black hover:text-white transition-all duration-200 font-semibold">
+                View All Products
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </button>
+            </Link>
+          </div> */}
         </div>
       </motion.div>
     </>

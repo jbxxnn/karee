@@ -176,6 +176,33 @@ export class ProductService {
     }
   }
 
+  async getRelatedProducts(categoryId: string, excludeProductId: string, limit: number = 4): Promise<ProductWithImages[]> {
+    try {
+      const { data, error } = await this.supabase
+        .from('products')
+        .select(`
+          *,
+          product_images (*),
+          category:categories (
+            id,
+            name,
+            slug
+          )
+        `)
+        .eq('is_active', true)
+        .eq('category_id', categoryId)
+        .neq('id', excludeProductId)
+        .order('created_at', { ascending: false })
+        .limit(limit);
+
+      if (error) throw error;
+      return data || [];
+    } catch (error) {
+      console.error('Error fetching related products:', error);
+      return [];
+    }
+  }
+
   async getRandomRelatedProduct(categoryId: string, excludeProductId: string): Promise<ProductWithImages | null> {
     try {
       const { data, error } = await this.supabase
