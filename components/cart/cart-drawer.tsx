@@ -3,8 +3,8 @@
 import { useEffect, useMemo } from 'react';
 import { useCartStore } from '@/lib/stores/cart-store';
 import { Cart } from './cart';
-import { Button } from '@/components/ui/button';
-import { X, ShoppingBag } from 'lucide-react';
+
+import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function CartDrawer() {
@@ -51,36 +51,36 @@ export function CartDrawer() {
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-0 h-full w-full max-w-md bg-white dark:bg-gray-900 shadow-2xl z-50 flex flex-col"
+            transition={{ 
+              type: 'spring', 
+              damping: 25, 
+              stiffness: 200,
+              duration: 0.3
+            }}
+            className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-50 flex flex-col"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-              <div className="flex items-center gap-2">
-                <ShoppingBag className="h-6 w-6 text-blue-600" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Cart
-                  {totalItemsCount > 0 && (
-                    <span className="ml-2 text-sm text-gray-500">
-                      ({totalItemsCount})
-                    </span>
-                  )}
+            <div className="flex items-center justify-between p-6 border-b border-gray-300">
+              <div className="flex items-center gap-3">
+                <h2 className="text-2xl font-bold text-gray-900 uppercase tracking-wide">
+                  CART
                 </h2>
+                <span className="text-xs font-normal text-gray-900">
+                  PRODUCT ({totalItemsCount})
+                </span>
               </div>
               
-              <Button
-                variant="ghost"
-                size="sm"
+              <button
                 onClick={closeCart}
-                className="h-8 w-8 p-0"
+                className="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center hover:bg-gray-800 transition-colors"
                 aria-label="Close cart"
               >
                 <X className="h-4 w-4" />
-              </Button>
+              </button>
             </div>
 
             {/* Cart Content */}
-            <div className="flex-1 overflow-y-auto p-4">
+            <div className="flex-1 overflow-hidden">
               <Cart />
             </div>
           </motion.div>

@@ -4,7 +4,8 @@ import { useEffect, useState, useMemo } from 'react';
 import { useCartStore } from '@/lib/stores/cart-store';
 import { CartItem } from './cart-item';
 import { Button } from '@/components/ui/button';
-import { ShoppingBag, ArrowRight, Truck, CreditCard } from 'lucide-react';
+import { ShoppingBag, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 export function Cart() {
@@ -21,14 +22,11 @@ export function Cart() {
       const price = item.selectedVariant?.price || item.product.price;
       return total + (price * item.quantity);
     }, 0);
-    const shipping = subtotal >= 50 ? 0 : 5.99;
-    const tax = subtotal * 0.08;
-    const total = subtotal + shipping + tax;
     
-    return { totalItems, subtotal, shipping, tax, total };
+    return { totalItems, subtotal };
   }, [items]);
   
-  const { totalItems, subtotal, shipping, tax, total } = computedValues;
+  const { totalItems, subtotal } = computedValues;
 
   // Handle hydration
   useEffect(() => {
@@ -39,7 +37,7 @@ export function Cart() {
   if (!isHydrated) {
     return (
       <div className="text-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto"></div>
         <p className="mt-2 text-gray-600">Loading cart...</p>
       </div>
     );
@@ -47,111 +45,117 @@ export function Cart() {
 
   if (items.length === 0) {
     return (
-      <div className="text-center py-12">
-        <ShoppingBag className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
-          Your cart is empty
-        </h3>
-        <p className="text-gray-600 dark:text-gray-400 mb-6">
-          Looks like you haven&apos;t added any products to your cart yet.
-        </p>
-        <Link href="/products">
-          <Button>
-            Start Shopping
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
+      <motion.div 
+        className="flex flex-col items-center justify-center h-full py-12"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ 
+          duration: 0.5, 
+          ease: "easeOut"
+        }}
+      >
+        {/* Main Message */}
+        <div className="text-center mb-8">
+          <h3 className="text-lg font-normal text-gray-900 mb-1">
+            Your cart is{' '}
+            <span className="text-xl italic font-normal text-gray-900">
+              empty
+            </span>
+          </h3>
+        </div>
+
+        {/* Call to Action Button */}
+        <Link href="/products" className="block">
+          <motion.div 
+            className="flex items-center border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-all duration-200"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <span className="px-6 py-3 text-sm font-medium text-gray-900 uppercase tracking-wide underline">
+              Browse Products
+            </span>
+            <div className="w-10 h-10 bg-gray-900 rounded-full flex items-center justify-center ml-2 mr-2">
+              <ArrowRight className="h-4 w-4 text-white" />
+            </div>
+          </motion.div>
         </Link>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      {/* Cart Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-          Shopping Cart ({totalItems} {totalItems === 1 ? 'item' : 'items'})
-        </h2>
-                 <Button
-           variant="ghost"
-           onClick={clearCart}
-           className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20"
-         >
-           Clear Cart
-         </Button>
-      </div>
-
+    <div className="flex flex-col h-full">
       {/* Cart Items */}
-      <div className="space-y-0 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
-                 {items.map((item) => (
-           <CartItem
-             key={item.id}
-             item={item}
-             onUpdateQuantity={updateQuantity}
-             onRemove={removeItem}
-           />
-         ))}
+      <div className="flex-1 p-6 overflow-y-auto">
+        <div className="space-y-6 relative">
+          {items.map((item, index) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ 
+                duration: 0.3, 
+                delay: index * 0.1,
+                ease: "easeOut"
+              }}
+            >
+              <CartItem
+                item={item}
+                onUpdateQuantity={updateQuantity}
+                onRemove={removeItem}
+              />
+            </motion.div>
+          ))}
+        </div>
       </div>
 
-      {/* Cart Summary */}
-      <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
-          Order Summary
-        </h3>
-        
-        <div className="space-y-3">
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-600 dark:text-gray-400">Subtotal</span>
-            <span className="font-medium">${subtotal.toFixed(2)}</span>
-          </div>
-          
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-600 dark:text-gray-400">Shipping</span>
-            <span className="font-medium">
-              {shipping === 0 ? (
-                <span className="text-green-600">Free</span>
-              ) : (
-                `$${shipping.toFixed(2)}`
-              )}
+      {/* Order Summary & Checkout Section */}
+      <motion.div 
+        className="bg-gray-50 p-6 border-t border-gray-200"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ 
+          duration: 0.4, 
+          delay: 0.2,
+          ease: "easeOut"
+        }}
+      >
+        <div className="space-y-4">
+          {/* Estimated Total */}
+          <div className="flex justify-between items-center">
+            <span className="text-sm font-bold text-gray-900 uppercase tracking-wide">
+              ESTIMATED TOTAL
+            </span>
+            <span className="text-lg font-bold text-gray-900">
+              ₦{subtotal.toFixed(2)}
             </span>
           </div>
           
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-600 dark:text-gray-400">Tax</span>
-            <span className="font-medium">${tax.toFixed(2)}</span>
-          </div>
+          {/* Shipping & Taxes Note */}
+          <p className="text-xs text-gray-600">
+            Shipping & taxes calculated at checkout
+          </p>
           
-          {shipping > 0 && (
-            <div className="text-sm text-green-600 bg-green-50 dark:bg-green-900/20 p-2 rounded">
-              <Truck className="inline h-4 w-4 mr-1" />
-              Add ${(50 - subtotal).toFixed(2)} more for free shipping!
-            </div>
-          )}
+          {/* Legal Disclaimer */}
+          <p className="text-xs text-gray-400 leading-relaxed">
+            By checking out, I agree to the{' '}
+            <Link href="/terms" className="underline hover:text-gray-600">
+              Terms of Use
+            </Link>{' '}
+            and acknowledge that I have read the{' '}
+            <Link href="/privacy" className="underline hover:text-gray-600">
+              Privacy Policy
+            </Link>
+          </p>
           
-          <div className="border-t border-gray-200 dark:border-gray-700 pt-3">
-            <div className="flex justify-between text-lg font-bold">
-              <span>Total</span>
-              <span>${total.toFixed(2)}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Checkout Button */}
-        <div className="mt-6 space-y-3">
-          <Link href="/checkout" className="w-full">
-            <Button className="w-full" size="lg">
-              <CreditCard className="mr-2 h-5 w-5" />
-              Proceed to Checkout
-            </Button>
-          </Link>
-          
-          <Link href="/products">
-            <Button variant="outline" className="w-full">
-              Continue Shopping
+          {/* Checkout Button */}
+          <Link href="/checkout" className="block w-full">
+            <Button className="w-full bg-gray-900 text-white hover:bg-gray-800 py-4 text-sm font-bold uppercase tracking-wide rounded-none transition-all duration-200 hover:scale-[1.02]">
+              CHECKOUT
             </Button>
           </Link>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
