@@ -957,7 +957,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
 
       {/* SECTION 4: Related Products */}
       <motion.div 
-        className="w-full bg-gray-50 py-16 px-4"
+        className="w-full bg-gray-50 py-[5rem] px-4"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut", delay: 3.6 }}
@@ -986,17 +986,17 @@ export function ProductDetail({ product }: ProductDetailProps) {
                 </div>
               ))
             ) : relatedProducts.length > 0 ? (
-              relatedProducts.map((product) => (
-                <Link href={`/products/${product.slug}`} key={product.id}>
-                  <motion.div
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer group"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, ease: "easeOut", delay: 3.8 + (parseInt(product.id) * 0.1) }}
-                    whileHover={{ y: -5 }}
-                  >
+                             relatedProducts.map((product, index) => (
+                 <Link href={`/products/${product.slug}`} key={product.id}>
+                   <motion.div
+                     className="bg-brand-secondary shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer group"
+                     initial={{ opacity: 0, y: 20 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     transition={{ duration: 0.6, ease: "easeOut", delay: 3.8 + (index * 0.1) }}
+                     whileHover={{ y: -5 }}
+                   >
                     {/* Product Image */}
-                    <div className="relative overflow-hidden rounded-t-lg">
+                    <div className="relative overflow-hidden">
                       <Image
                         src={product.product_images?.[0]?.image_url || '/home-2.jpg'}
                         alt={product.name}
@@ -1014,17 +1014,17 @@ export function ProductDetail({ product }: ProductDetailProps) {
 
                     {/* Product Info */}
                     <div className="p-4">
-                      <h3 className="font-semibold text-brand-black text-sm mb-2 line-clamp-2 group-hover:text-brand-black transition-colors">
+                      <h3 className="font-semibold font-pp-mori text-brand-black text-lg mb-2 line-clamp-2 group-hover:text-brand-black transition-colors">
                         {product.name}
                       </h3>
                       
                       {/* Price */}
                       <div className="flex items-center gap-2 mb-3">
-                        <span className="text-lg font-bold text-brand-black">
+                        <span className="text-lg font-bold font-pp-mori text-brand-black">
                           ₦{product.price.toFixed(2)}
                         </span>
                         {product.compare_price && product.compare_price > product.price && (
-                          <span className="text-sm text-gray-500 line-through">
+                          <span className="text-sm font-pp-mori text-gray-500 line-through">
                             ₦{product.compare_price.toFixed(2)}
                           </span>
                         )}
