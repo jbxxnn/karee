@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { productService, ProductWithImages } from '@/lib/services/product-service';
 import { ProductDetail } from '@/components/products/product-detail';
-import { RelatedProducts } from '@/components/products/related-products';
+// import { RelatedProducts } from '@/components/products/related-products';
 import { Button } from '@/components/ui/button';
 import { AlertCircle, ArrowLeft } from 'lucide-react';
 import { Layout } from '@/components/layout/layout';
@@ -18,6 +18,8 @@ export default function ProductPage() {
   const [product, setProduct] = useState<ProductWithImages | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
     if (slug) {
@@ -29,6 +31,18 @@ export default function ProductPage() {
     try {
       setLoading(true);
       setError(null);
+      setLoadingProgress(0);
+      
+      // Start the countdown from 0 to 90
+      const countTo90 = setInterval(() => {
+        setLoadingProgress(prev => {
+          if (prev >= 90) {
+            clearInterval(countTo90);
+            return 90;
+          }
+          return prev + 5;
+        });
+      }, 150); // Slower countdown
       
       console.log('🔍 Loading product with slug:', slug);
       const productData = await productService.getProductBySlug(slug);
@@ -39,53 +53,63 @@ export default function ProductPage() {
         return;
       }
       
+      // Set product data
       setProduct(productData);
+      
+      // Wait a moment, then continue countdown to 100
+      setTimeout(() => {
+                 const countTo100 = setInterval(() => {
+           setLoadingProgress(prev => {
+             if (prev >= 100) {
+               clearInterval(countTo100);
+               return 100;
+             }
+             return prev + 1;
+           });
+         }, 80); // Slower final countdown
+      }, 300);
+      
     } catch (err) {
       console.error('❌ Error loading product:', err);
       setError('Failed to load product. Please try again.');
-    } finally {
-      setLoading(false);
     }
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white">
-        <div className="container mx-auto">
-          <motion.div 
-            className="flex flex-col lg:flex-row gap-0 mb-12 items-start pl-0 pt-0"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+      <div className="min-h-screen bg-brand-cream flex items-center justify-center">
+        <div className="text-center">
+          {/* Loading Percentage Counter */}
+          <motion.div
+            className="text-9xl md:text-[12rem] font-light text-brand-black mb-4 font-serif"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
           >
-            {/* Image Gallery Skeleton */}
-            <div className="lg:w-[63%] space-y-4">
-              <div className="aspect-square bg-gradient-to-br from-gray-200 to-gray-300 animate-pulse rounded-lg" />
-              <div className="flex gap-4">
-                <div className="w-[65%] aspect-square bg-gradient-to-br from-gray-200 to-gray-300 animate-pulse rounded-lg" />
-                <div className="w-[35%] flex flex-col gap-4">
-                  <div className="aspect-square bg-gradient-to-br from-gray-200 to-gray-300 animate-pulse rounded-lg" />
-                  <div className="aspect-square bg-gradient-to-br from-gray-200 to-gray-300 animate-pulse rounded-lg" />
-                </div>
-              </div>
-            </div>
-
-            {/* Product Info Skeleton */}
-            <div className="lg:w-[37%] lg:sticky lg:top-0">
-              <div className="p-[4rem] pt-[10rem] space-y-6">
-                <div className="h-16 bg-gradient-to-r from-gray-200 to-gray-300 animate-pulse rounded" />
-                <div className="h-8 bg-gradient-to-r from-gray-200 to-gray-300 animate-pulse rounded w-3/4" />
-                <div className="h-6 bg-gradient-to-r from-gray-200 to-gray-300 animate-pulse rounded w-full" />
-                <div className="h-12 bg-gradient-to-r from-gray-200 to-gray-300 animate-pulse rounded" />
-                <div className="h-12 bg-gradient-to-r from-gray-200 to-gray-300 animate-pulse rounded" />
-                <div className="space-y-3">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="h-4 bg-gradient-to-r from-gray-200 to-gray-300 animate-pulse rounded" />
-                  ))}
-                </div>
-              </div>
-            </div>
+            {loadingProgress}
           </motion.div>
+          
+          {/* Subtle Loading Indicator */}
+          <motion.div
+            className="w-3 h-3 border border-gray-400 rounded-full mx-auto opacity-30"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          />
+          
+          {/* Fade Effect when loading completes */}
+          {loadingProgress === 100 && (
+            <motion.div
+              className="fixed inset-0 bg-brand-cream z-50"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 0 }}
+              transition={{ duration: 3, ease: "easeInOut" }}
+              onAnimationComplete={() => {
+                setShowContent(true);
+                setLoading(false);
+              }}
+            />
+          )}
         </div>
       </div>
     );
@@ -93,14 +117,14 @@ export default function ProductPage() {
 
   if (error || !product) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen bg-brand-cream dark:bg-gray-900">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center max-w-md mx-auto">
             <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+            <h2 className="text-xl font-semibold text-brand-black dark:text-gray-100 mb-2">
               {error || 'Product not found'}
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
+            <p className="text-brand-black dark:text-gray-400 mb-4">
               The product you&apos;re looking for doesn&apos;t exist or has been removed.
             </p>
             <div className="space-y-2">
@@ -127,13 +151,13 @@ export default function ProductPage() {
         {/* <nav className="mb-6">
           <ol className="flex items-center space-x-2 text-sm text-brand-black dark:text-brand-black">
             <li>
-              <Link href="/" className="hover:text-gray-900 dark:hover:text-gray-100">
+                <Link href="/" className="hover:text-brand-black dark:hover:text-gray-100">
                 Home
               </Link>
             </li>
             <li>/</li>
             <li>
-              <Link href="/products" className="hover:text-gray-900 dark:hover:text-gray-100">
+              <Link href="/products" className="hover:text-brand-black dark:hover:text-gray-100">
                 Products
               </Link>
             </li>
@@ -143,7 +167,7 @@ export default function ProductPage() {
                 <li>
                   <Link 
                     href={`/products?category=${product.category.slug}`}
-                    className="hover:text-gray-900 dark:hover:text-gray-100"
+                    className="hover:text-brand-black dark:hover:text-gray-100"
                   >
                     {product.category.name}
                   </Link>
@@ -151,7 +175,7 @@ export default function ProductPage() {
               </>
             )}
             <li>/</li>
-            <li className="text-gray-900 dark:text-gray-100 font-medium">
+            <li className="text-brand-black dark:text-gray-100 font-medium">
               {product.name}
             </li>
           </ol>
@@ -161,10 +185,10 @@ export default function ProductPage() {
         <ProductDetail product={product} />
 
         {/* Related Products */}
-        <RelatedProducts 
+        {/* <RelatedProducts 
           currentProductId={product.id}
           categoryId={product.category?.id}
-        />
+        /> */}
       </div>
     </Layout>
   );
