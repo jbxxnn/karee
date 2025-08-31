@@ -4,14 +4,14 @@ import { useEffect, useState, useMemo } from 'react';
 import { useCartStore } from '@/lib/stores/cart-store';
 import { CartItem } from './cart-item';
 import { Button } from '@/components/ui/button';
-import { ShoppingBag, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 export function Cart() {
   const [isHydrated, setIsHydrated] = useState(false);
   const items = useCartStore(state => state.items);
-  const clearCart = useCartStore(state => state.clearCart);
+  // const clearCart = useCartStore(state => state.clearCart);
   const updateQuantity = useCartStore(state => state.updateQuantity);
   const removeItem = useCartStore(state => state.removeItem);
   
@@ -26,7 +26,7 @@ export function Cart() {
     return { totalItems, subtotal };
   }, [items]);
   
-  const { totalItems, subtotal } = computedValues;
+  const { subtotal } = computedValues;
 
   // Handle hydration
   useEffect(() => {
