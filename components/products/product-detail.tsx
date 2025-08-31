@@ -419,7 +419,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
 
       {/* SECTION 3: All About The Product */}
       <motion.div 
-        className="w-full bg-white py-[5rem] px-4"
+        className="w-full bg-white py-4 md:py-[5rem] px-4"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut", delay: 3.0 }}
@@ -518,9 +518,9 @@ export function ProductDetail({ product }: ProductDetailProps) {
               {activeTab === 'About' && (
                 <>
                   {/* About The Product */}
-                  <div className="flex gap-4 justify-between items-center">
+                <div className="flex gap-4 justify-between items-center">
 
-                    <div className="w-full">
+                    <div className="w-full hidden md:block">
                       <Image 
                       src="/home-2.jpg" 
                       alt="About The Product" 
@@ -539,8 +539,17 @@ export function ProductDetail({ product }: ProductDetailProps) {
                     </p>
                   </div>
 
+                  <div className="w-full block md:hidden !mt-[3rem]">
+                      <Image 
+                      src="/home-2.jpg" 
+                      alt="About The Product" 
+                      width={500} 
+                      height={500} 
+                      />
+                    </div>
+
                   {/* Recommended For */}
-                  <div className="flex justify-start gap-[5rem] !mt-[5rem]">
+                  <div className="flex justify-start gap-[5rem] !mt-[3rem] md:!mt-[5rem]">
                   <div className="space-y-4">
                     <h3 className="text-xs font-medium font-pp-mori text-gray-600 uppercase tracking-wide">
                       Recommended For
@@ -581,7 +590,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                   </div>
 
                   {/* Feature Icons */}
-                  <div className="grid grid-cols-4 gap-6 pt-[5rem]">
+                  <div className="grid grid-cols-4 gap-6 pt-[3rem] md:pt-[5rem]">
                     {[
                       { 
                         icon: (
