@@ -426,7 +426,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
       >
         <div className="max-w-7xl mx-auto">
           {/* Header Section */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-10 md:mb-16">
             <h2 className="text-5xl lg:text-6xl font-bold text-brand-black mb-8">
               <span className="font-pp-editorial italic font-normal">About Our Product</span>
             </h2>
@@ -450,7 +450,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
           </div>
 
           {/* Main Content - Two Column Layout */}
-          <div className="grid gap-16 items-start py-[3rem]">
+          <div className="grid gap-16 items-start pt-[0rem] md:pt-[3rem] py-[3rem]">
             {/* Left Column - Product Visuals */}
             {/* <motion.div 
               className="space-y-8"
@@ -693,7 +693,6 @@ export function ProductDetail({ product }: ProductDetailProps) {
                   <div className="space-y-6">
                     <div className="flex items-center justify-between">
                       <h3 className="text-xs font-bold text-brand-black">KEY INGREDIENTS</h3>
-                      <div className="text-xs text-gray-500">← 2 / 2 →</div>
                     </div>
                     
                     <div className="space-y-6">
