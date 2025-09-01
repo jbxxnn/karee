@@ -283,7 +283,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                   ].map((spec, index, array) => (
                     <div 
                       key={index} 
-                      className={`flex flex-col md:flex-row justify-between py-2 pb-4 md:pb-0 ${
+                      className={`flex flex-col md:flex-row justify-between py-2 pb-4 ${
                         index === array.length - 1 
                           ? '' 
                           : 'border-b border-gray-200 dark:border-gray-700'

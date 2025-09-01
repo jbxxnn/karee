@@ -63,13 +63,13 @@ export function Header() {
                 shop
               </Link>
               <Link 
-                href="/cart" 
+                href="/products" 
                 className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-xs uppercase font-ultrabold"
               >
                 about us
               </Link>
               <Link 
-                href="/cart" 
+                href="/products" 
                 className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-xs uppercase font-ultrabold"
               >
                 collections
@@ -145,14 +145,14 @@ export function Header() {
               shop
             </Link>
             <Link 
-              href="/cart" 
+              href="/products" 
               className="block text-lg text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 font-medium border-b border-transparent hover:border-gray-300 dark:hover:border-gray-600 pb-2"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               about us
             </Link>
             <Link 
-              href="/cart" 
+              href="/products" 
               className="block text-lg text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 font-medium border-b border-transparent hover:border-gray-300 dark:hover:border-gray-600 pb-2"
               onClick={() => setIsMobileMenuOpen(false)}
             >

@@ -65,6 +65,12 @@
   * {
     @apply border-border;
   }
+  html, body {
+    overscroll-behavior: none; /* disable edge/bounce scroll */
+    overscroll-behavior-y: none;
+    overscroll-behavior-x: none;
+    overflow-x: hidden; /* prevent horizontal jiggle */
+  }
   body {
     @apply bg-background text-foreground;
     background-image: 

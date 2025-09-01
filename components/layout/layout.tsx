@@ -12,9 +12,9 @@ interface LayoutProps {
 
 export function Layout({ children, showHeader = true }: LayoutProps) {
   return (
-    <div className="min-h-screen bg-brand-cream flex flex-col">
+    <div className="min-h-screen bg-[#f8f8f8] flex flex-col">
       {showHeader && <Header />}
-      <main className="flex-1">
+      <main className="flex-1 pt-16">
         {children}
       </main>
       <Footer />

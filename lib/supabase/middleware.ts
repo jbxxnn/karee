@@ -59,7 +59,7 @@ export async function updateSession(request: NextRequest) {
     "/privacy",
     "/help",
     "/faq",
-    "/cart",
+    // "/cart", // no standalone cart page
     "/checkout"
   ];
 

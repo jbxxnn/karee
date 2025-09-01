@@ -237,9 +237,9 @@ export function CheckoutForm() {
         <Button
           type="button"
           variant="outline"
-          onClick={() => router.push('/cart')}
+          onClick={() => router.push('/products')}
         >
-          Back to Cart
+          Continue Shopping
         </Button>
         
         <Button

@@ -56,9 +56,9 @@ export function Cart() {
       >
         {/* Main Message */}
         <div className="text-center mb-8">
-          <h3 className="text-lg font-normal text-gray-900 mb-1">
-            Your cart is{' '}
-            <span className="text-xl italic font-normal text-gray-900">
+          <h3 className="text-5xl font-normal text-gray-900 mb-1">
+            Your cart is{' '} <br />
+            <span className="text-5xl italic font-normal text-gray-900">
               empty
             </span>
           </h3>
@@ -67,15 +67,15 @@ export function Cart() {
         {/* Call to Action Button */}
         <Link href="/products" className="block">
           <motion.div 
-            className="flex items-center border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-all duration-200"
+            className="flex items-center border border-gray-300 rounded-lg bg-brand-black transition-all duration-200"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <span className="px-6 py-3 text-sm font-medium text-gray-900 uppercase tracking-wide underline">
+            <span className="px-6 py-3 text-sm font-medium text-white uppercase tracking-wide">
               Browse Products
             </span>
-            <div className="w-10 h-10 bg-gray-900 rounded-full flex items-center justify-center ml-2 mr-2">
-              <ArrowRight className="h-4 w-4 text-white" />
+            <div className="w-8 h-8 bg-brand-cream rounded-full flex items-center justify-center ml-2 mr-2">
+              <ArrowRight className="h-4 w-4 text-brand-black" />
             </div>
           </motion.div>
         </Link>
@@ -111,7 +111,7 @@ export function Cart() {
 
       {/* Order Summary & Checkout Section */}
       <motion.div 
-        className="bg-gray-50 p-6 border-t border-gray-200"
+        className="bg-gray-50 p-10 border-t border-gray-200"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ 
@@ -150,7 +150,7 @@ export function Cart() {
           
           {/* Checkout Button */}
           <Link href="/checkout" className="block w-full">
-            <Button className="w-full bg-gray-900 text-white hover:bg-gray-800 py-4 text-sm font-bold uppercase tracking-wide rounded-none transition-all duration-200 hover:scale-[1.02]">
+            <Button className="w-full bg-gray-900 text-white hover:bg-gray-800 py-6 text-sm font-bold uppercase tracking-wide rounded-none transition-all duration-200 hover:scale-[1.02]">
               CHECKOUT
             </Button>
           </Link>

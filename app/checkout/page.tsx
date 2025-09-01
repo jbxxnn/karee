@@ -6,7 +6,7 @@ import { useCartStore } from '@/lib/stores/cart-store';
 import { CheckoutForm } from '@/components/checkout/checkout-form';
 import { OrderSummary } from '@/components/checkout/order-summary';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, ShoppingCart } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 import { Layout } from '@/components/layout/layout';
 import Link from 'next/link';
 
@@ -19,10 +19,10 @@ export default function CheckoutPage() {
   );
   // const [isLoading, setIsLoading] = useState(false);
 
-  // Redirect if cart is empty
+  // If cart becomes empty, send user back to products (not cart)
   useEffect(() => {
     if (totalItemsCount === 0) {
-      router.push('/cart');
+      router.push('/products');
     }
   }, [totalItemsCount, router]);
 
@@ -47,38 +47,23 @@ export default function CheckoutPage() {
 
   return (
     <Layout>
-      {/* Back to Cart Button */}
-      <div className="container mx-auto px-4 py-4">
-        <Link href="/cart">
-          <Button variant="outline" size="sm">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Cart
-          </Button>
-        </Link>
-      </div>
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto">
+      <div className="container mx-auto bg-white">
+        <div className="w-full mx-auto">
           {/* Page Title */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-              Checkout
-            </h1>
-            <p className="text-gray-400">
-              Complete your purchase securely
-            </p>
-          </div>
 
           {/* Checkout Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Left Column - Checkout Form */}
-            <div className="lg:col-span-2">
+            <div className="flex justify-end p-8">
+              <div className="w-[70%]">
               <CheckoutForm />
+              </div>
             </div>
 
             {/* Right Column - Order Summary */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-8">
+              <div className="bg-[#f5f5f5] flex justify-start sticky top-8 p-8">
+                <div className="w-[70%]">
                 <OrderSummary />
               </div>
             </div>

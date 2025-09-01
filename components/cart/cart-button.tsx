@@ -13,7 +13,7 @@ export function CartButton() {
 
   return (
     <a 
-      href="/cart" 
+      href="#" 
       aria-label="Cart" 
       className="u-p3 header-CartBag relative text-xxs text-brand-black font-pp-mori" 
       data-action="toggle-drawer" 

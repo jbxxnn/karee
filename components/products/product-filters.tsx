@@ -32,7 +32,7 @@ const defaultFilters: ProductFilters = {
   search: '',
   category: '',
   minPrice: 0,
-  maxPrice: 1000,
+  maxPrice: 100000, // Increased from 1000 to accommodate higher prices
   sortBy: 'newest',
   inStock: false,
 };
@@ -150,9 +150,9 @@ export function ProductFilters({
                 handleFilterChange('minPrice', min);
                 handleFilterChange('maxPrice', max);
               }}
-              max={1000}
+              max={100000}
               min={0}
-              step={10}
+              step={100}
               className="w-full"
             />
             <div className="flex gap-2">
