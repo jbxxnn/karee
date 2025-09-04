@@ -4,6 +4,7 @@
 -- Create custom types
 CREATE TYPE order_status AS ENUM ('pending', 'processing', 'shipped', 'delivered', 'cancelled');
 CREATE TYPE payment_status AS ENUM ('pending', 'paid', 'failed', 'refunded');
+CREATE TYPE user_role AS ENUM ('customer', 'admin', 'moderator');
 
 -- Categories table
 CREATE TABLE categories (
@@ -80,6 +81,7 @@ CREATE TABLE user_profiles (
     phone VARCHAR(20),
     date_of_birth DATE,
     avatar_url TEXT,
+    role user_role DEFAULT 'customer',
     preferences JSONB, -- {newsletter, marketing_emails, etc.}
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -266,6 +268,26 @@ $$ language 'plpgsql';
 -- Apply order number trigger
 CREATE TRIGGER generate_order_number_trigger BEFORE INSERT ON orders FOR EACH ROW EXECUTE FUNCTION generate_order_number();
 
+-- Create function to automatically create user profile when user signs up
+CREATE OR REPLACE FUNCTION handle_new_user()
+RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO public.user_profiles (user_id, first_name, last_name, role)
+    VALUES (
+        NEW.id,
+        COALESCE(NEW.raw_user_meta_data->>'first_name', ''),
+        COALESCE(NEW.raw_user_meta_data->>'last_name', ''),
+        'customer'
+    );
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Create trigger to call handle_new_user when a new user signs up
+CREATE TRIGGER on_auth_user_created
+    AFTER INSERT ON auth.users
+    FOR EACH ROW EXECUTE FUNCTION handle_new_user();
+
 -- Enable Row Level Security (RLS)
 ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE products ENABLE ROW LEVEL SECURITY;
@@ -285,8 +307,20 @@ ALTER TABLE coupon_usage ENABLE ROW LEVEL SECURITY;
 -- Categories: Public read access
 CREATE POLICY "Categories are viewable by everyone" ON categories FOR SELECT USING (true);
 
--- Products: Public read access for active products
+-- Products: Public read access for active products, admins can see all
 CREATE POLICY "Active products are viewable by everyone" ON products FOR SELECT USING (is_active = true);
+CREATE POLICY "Admins can view all products" ON products FOR SELECT USING (
+    EXISTS (
+        SELECT 1 FROM user_profiles 
+        WHERE user_id = auth.uid() AND role = 'admin'
+    )
+);
+CREATE POLICY "Admins can manage products" ON products FOR ALL USING (
+    EXISTS (
+        SELECT 1 FROM user_profiles 
+        WHERE user_id = auth.uid() AND role = 'admin'
+    )
+);
 
 -- Product images: Public read access
 CREATE POLICY "Product images are viewable by everyone" ON product_images FOR SELECT USING (true);
@@ -294,9 +328,21 @@ CREATE POLICY "Product images are viewable by everyone" ON product_images FOR SE
 -- Product variants: Public read access for active variants
 CREATE POLICY "Active product variants are viewable by everyone" ON product_variants FOR SELECT USING (is_active = true);
 
--- User profiles: Users can only see their own profile
+-- User profiles: Users can only see their own profile, admins can see all
 CREATE POLICY "Users can view own profile" ON user_profiles FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Admins can view all profiles" ON user_profiles FOR SELECT USING (
+    EXISTS (
+        SELECT 1 FROM user_profiles 
+        WHERE user_id = auth.uid() AND role = 'admin'
+    )
+);
 CREATE POLICY "Users can update own profile" ON user_profiles FOR UPDATE USING (auth.uid() = user_id);
+CREATE POLICY "Admins can update any profile" ON user_profiles FOR UPDATE USING (
+    EXISTS (
+        SELECT 1 FROM user_profiles 
+        WHERE user_id = auth.uid() AND role = 'admin'
+    )
+);
 CREATE POLICY "Users can insert own profile" ON user_profiles FOR INSERT WITH CHECK (auth.uid() = user_id);
 
 -- User addresses: Users can only see their own addresses
@@ -307,8 +353,20 @@ CREATE POLICY "Users can manage own addresses" ON user_addresses FOR ALL USING (
 CREATE POLICY "Users can view own cart items" ON cart_items FOR SELECT USING (auth.uid() = user_id OR session_id IS NOT NULL);
 CREATE POLICY "Users can manage own cart items" ON cart_items FOR ALL USING (auth.uid() = user_id OR session_id IS NOT NULL);
 
--- Orders: Users can only see their own orders
+-- Orders: Users can only see their own orders, admins can see all
 CREATE POLICY "Users can view own orders" ON orders FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Admins can view all orders" ON orders FOR SELECT USING (
+    EXISTS (
+        SELECT 1 FROM user_profiles 
+        WHERE user_id = auth.uid() AND role = 'admin'
+    )
+);
+CREATE POLICY "Admins can manage orders" ON orders FOR ALL USING (
+    EXISTS (
+        SELECT 1 FROM user_profiles 
+        WHERE user_id = auth.uid() AND role = 'admin'
+    )
+);
 CREATE POLICY "Users can insert own orders" ON orders FOR INSERT WITH CHECK (auth.uid() = user_id);
 
 -- Order items: Users can only see items from their own orders

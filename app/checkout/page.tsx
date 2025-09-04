@@ -55,14 +55,14 @@ export default function CheckoutPage() {
           {/* Checkout Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Left Column - Checkout Form */}
-            <div className="flex justify-end p-8">
+            <div className="flex justify-end p-8 py-24">
               <div className="w-[70%]">
               <CheckoutForm />
               </div>
             </div>
 
             {/* Right Column - Order Summary */}
-              <div className="bg-[#f5f5f5] flex justify-start sticky top-8 p-8">
+              <div className="bg-[#f5f5f5] flex justify-start sticky top-8 p-8 py-24">
                 <div className="w-[70%]">
                 <OrderSummary />
               </div>

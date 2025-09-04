@@ -34,7 +34,7 @@ export function Header() {
 
 
   return (
-    <header className={`fixed top-0 z-50 w-full bg-brand-cream dark:bg-gray-900 shadow-sm border-b border-brand-black transition-transform duration-300 ease-in-out ${
+    <header className={`fixed top-0 z-50 w-full bg-brand-black shadow-sm border-b border-brand-cream transition-transform duration-300 ease-in-out ${
       isVisible ? 'translate-y-0' : '-translate-y-full'
     }`}>
       <div className="mx-auto px-4 sm:px-6 lg:px-12">
@@ -55,28 +55,28 @@ export function Header() {
             </button>
             
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex text-brand-black items-center space-x-6 xl:space-x-8 font-pp-mori">
+            <nav className="hidden lg:flex text-brand-cream items-center space-x-6 xl:space-x-8 font-pp-mori">
               <Link 
                 href="/products" 
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-xs uppercase font-ultrabold"
+                className="text-brand-cream transition-colors duration-200 text-xs uppercase font-ultrabold"
               >
                 shop
               </Link>
               <Link 
                 href="/products" 
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-xs uppercase font-ultrabold"
+                className="text-brand-cream transition-colors duration-200 text-xs uppercase font-ultrabold"
               >
                 about us
               </Link>
               <Link 
                 href="/products" 
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-xs uppercase font-ultrabold"
+                className="text-brand-cream transition-colors duration-200 text-xs uppercase font-ultrabold"
               >
                 collections
               </Link>
               <Link 
                 href="/checkout" 
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-xs uppercase font-ultrabold"
+                className="text-brand-cream transition-colors duration-200 text-xs uppercase font-ultrabold"
               >
                 support
               </Link>
@@ -86,7 +86,7 @@ export function Header() {
           {/* Center Section - Brand Logo/Title */}
           <div className="absolute left-1/2 transform -translate-x-1/2 flex justify-center items-center">
             <Link href="/" className="flex items-center">
-              <h1 className="text-2xl md:text-3xl text-gray-900 dark:text-white">
+              <h1 className="text-2xl md:text-4xl text-brand-cream">
                 kareè
               </h1>
             </Link>

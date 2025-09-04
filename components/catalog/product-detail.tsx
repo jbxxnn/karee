@@ -3,14 +3,16 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ProductWithImages, productService } from '@/lib/services/product-service';
+import { ProductVariant } from '@/lib/services/product-variant-service';
 import { ProductGallery } from './product-gallery';
-import { ProductVariants } from './product-variants';
+import ProductVariantSelector from './product-variant-selector';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Minus, Plus } from 'lucide-react';
 import { useCartStore } from '@/lib/stores/cart-store';
 import Image from 'next/image';
 import Link from 'next/link';
+import { BentoGrid, BentoGridItem } from '@/components/ui/bento-grid';
 
 interface ProductDetailProps {
   product: ProductWithImages & {
@@ -35,6 +37,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
   const [activeTab, setActiveTab] = useState('About');
   const [relatedProducts, setRelatedProducts] = useState<ProductWithImages[]>([]);
   const [loadingRelated, setLoadingRelated] = useState(true);
+  const [hasVariants, setHasVariants] = useState(false);
   
   const addToCart = useCartStore(state => state.addItem);
   const openCart = useCartStore(state => state.openCart);
@@ -70,14 +73,26 @@ export function ProductDetail({ product }: ProductDetailProps) {
     ? Math.round(((product.compare_price! - currentPrice) / product.compare_price!) * 100)
     : 0;
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (variant?: ProductVariant, variantQuantity?: number) => {
     setIsAddingToCart(true);
     try {
-      addToCart(product, quantity, selectedVariant || undefined);
+      const itemToAdd = variant ? {
+        ...product,
+        variant_id: variant.id || variant.variant_id,
+        variant_name: variant.sku || 'Variant',
+        variant_attributes: variant.attributes
+      } : product;
+      
+      const quantityToAdd = variantQuantity || quantity;
+      addToCart(itemToAdd, quantityToAdd, selectedVariant || undefined);
       openCart();
     } finally {
       setIsAddingToCart(false);
     }
+  };
+
+  const handleDefaultAddToCart = async () => {
+    await handleAddToCart();
   };
 
   const handleQuantityChange = (newQuantity: number) => {
@@ -171,76 +186,94 @@ export function ProductDetail({ product }: ProductDetailProps) {
               </motion.div>
 
               {/* Product Variants */}
-              {product.product_variants && product.product_variants.length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: 1.2 }}
-                >
-                  <ProductVariants
-                    variants={product.product_variants}
-                    selectedVariant={selectedVariant}
-                    onVariantSelect={setSelectedVariant}
-                  />
-                </motion.div>
-              )}
-
-              {/* Quantity Selector */}
-              <motion.div 
-                className="flex flex-row items-center !mb-10"
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 1.4 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 1.2 }}
               >
-                <div className="flex items-center gap-3 border p-3">
-                  <Button
-                    size="sm"
-                    onClick={() => handleQuantityChange(quantity - 1)}
-                    disabled={quantity <= 1}
-                    className="w-6 h-6 p-0 rounded-full bg-[#00000000] text-brand-black shadow-none hover:bg-[#00000000] hover:text-brand-black"
-                  >
-                    <Minus size={16} />
-                  </Button>
-                  <span className="w-4 text-center font-medium">
-                    {quantity}
-                  </span>
-                  <Button
-                    size="sm"
-                    onClick={() => handleQuantityChange(quantity + 1)}
-                    disabled={quantity >= product.stock_quantity}
-                    className="w-6 h-6 p-0 rounded-full shadow-none bg-[#00000000] text-brand-black hover:bg-[#00000000] hover:text-brand-black"
-                  >
-                   <Plus size={16} />
-                  </Button>
-                </div>
+                <ProductVariantSelector
+                  productId={product.id}
+                  basePrice={product.price}
+                  onVariantSelect={(variant, finalPrice) => {
+                    if (variant) {
+                                              setSelectedVariant({
+                          id: variant.id || variant.variant_id || '',
+                          name: variant.sku || 'Variant',
+                          price: finalPrice
+                        });
+                    } else {
+                      setSelectedVariant(null);
+                    }
+                  }}
+                  onAddToCart={(variant, quantity) => {
+                    handleAddToCart(variant, quantity);
+                  }}
+                  onVariantsLoaded={(hasVariants: boolean) => {
+                    setHasVariants(hasVariants);
+                  }}
+                />
+              </motion.div>
 
-                <motion.div
-                className="w-full"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 1.6 }}
-              >
-                <Button
-                  onClick={handleAddToCart}
-                  disabled={isAddingToCart || product.stock_quantity <= 0}
-                  size="lg"
-                  className="w-full text-white py-6 bg-brand-black rounded-none shadow-sm hover:text-brand-black border-brand-black border hover:bg-white hover:border-brand-black hover:border transition-all duration-200"
-                >
-                  {isAddingToCart ? (
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent animate-spin" />
-                      Adding to Cart...
+              {/* Quantity Selector and Add to Cart - Only show for simple products (no variants) */}
+              {hasVariants === false && (
+                <>
+                  <motion.div 
+                    className="flex flex-row items-center !mb-10"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 1.4 }}
+                  >
+                    <div className="flex items-center gap-3 border p-3">
+                      <Button
+                        size="sm"
+                        onClick={() => handleQuantityChange(quantity - 1)}
+                        disabled={quantity <= 1}
+                        className="w-6 h-6 p-0 rounded-full bg-[#00000000] text-brand-black shadow-none hover:bg-[#00000000] hover:text-brand-black"
+                      >
+                        <Minus size={16} />
+                      </Button>
+                      <span className="w-4 text-center font-medium">
+                        {quantity}
+                      </span>
+                      <Button
+                        size="sm"
+                        onClick={() => handleQuantityChange(quantity + 1)}
+                        disabled={quantity >= product.stock_quantity}
+                        className="w-6 h-6 p-0 rounded-full shadow-none bg-[#00000000] text-brand-black hover:bg-[#00000000] hover:text-brand-black"
+                      >
+                       <Plus size={16} />
+                      </Button>
                     </div>
-                  ) : (
-                                     <div className="flex items-center justify-center w-full">
-                         <div className="flex items-center gap-2">
-                           <p className="text-sm font-pp-mori font-bold">Add to Cart</p>
-                         </div>
-                       </div>
-                  )}
-                </Button>
-              </motion.div>
-              </motion.div>
+
+                    <motion.div
+                    className="w-full"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 1.6 }}
+                  >
+                    <Button
+                      onClick={handleDefaultAddToCart}
+                      disabled={isAddingToCart || product.stock_quantity <= 0}
+                      size="lg"
+                      className="w-full text-white py-6 bg-brand-black rounded-none shadow-sm hover:text-brand-black border-brand-black border hover:bg-white hover:border-brand-black hover:border transition-all duration-200"
+                    >
+                      {isAddingToCart ? (
+                        <div className="flex items-center gap-2">
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent animate-spin" />
+                          Adding to Cart...
+                        </div>
+                      ) : (
+                                         <div className="flex items-center justify-center w-full">
+                             <div className="flex items-center gap-2">
+                               <p className="text-sm font-pp-mori font-bold">Add to Cart</p>
+                             </div>
+                           </div>
+                      )}
+                    </Button>
+                  </motion.div>
+                  </motion.div>
+                </>
+              )}
 
               
 
@@ -962,7 +995,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut", delay: 3.6 }}
       >
-        <div className="max-w-7xl mx-auto">
+        <div className="w-full mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
             <h2 className="text-4xl lg:text-5xl font-bold text-brand-black mb-4">
@@ -971,10 +1004,10 @@ export function ProductDetail({ product }: ProductDetailProps) {
           </div>
 
           {/* Related Products Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {loadingRelated ? (
-              // Loading skeleton
-              Array.from({ length: 4 }).map((_, index) => (
+          {loadingRelated ? (
+            // Loading skeleton
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {Array.from({ length: 4 }).map((_, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-sm animate-pulse">
                   <div className="h-64 bg-gray-200 rounded-t-lg"></div>
                   <div className="p-4 space-y-3">
@@ -984,93 +1017,84 @@ export function ProductDetail({ product }: ProductDetailProps) {
                     <div className="h-8 bg-gray-200 rounded"></div>
                   </div>
                 </div>
-              ))
-            ) : relatedProducts.length > 0 ? (
-                             relatedProducts.map((product, index) => (
-                 <Link href={`/products/${product.slug}`} key={product.id}>
-                   <motion.div
-                     className="bg-brand-secondary shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer group"
-                     initial={{ opacity: 0, y: 20 }}
-                     animate={{ opacity: 1, y: 0 }}
-                     transition={{ duration: 0.6, ease: "easeOut", delay: 3.8 + (index * 0.1) }}
-                     whileHover={{ y: -5 }}
-                   >
-                    {/* Product Image */}
-                    <div className="relative overflow-hidden">
-                      <Image
-                        src={product.product_images?.[0]?.image_url || '/home-2.jpg'}
-                        alt={product.name}
-                        width={300}
-                        height={300}
-                        className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      {/* Category Badge */}
-                      <div className="absolute top-3 left-3">
-                        <span className="bg-brand-black text-white text-xs px-2 py-1 rounded-full font-medium">
-                          {product.category?.name || 'Product'}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Product Info */}
-                    <div className="p-4">
-                      <h3 className="font-semibold font-pp-mori text-brand-black text-lg mb-2 line-clamp-2 group-hover:text-brand-black transition-colors">
-                        {product.name}
-                      </h3>
-                      
-                      {/* Price */}
-                      <div className="flex items-center gap-2 mb-3">
-                        <span className="text-lg font-bold font-pp-mori text-brand-black">
-                          ₦{product.price.toFixed(2)}
-                        </span>
-                        {product.compare_price && product.compare_price > product.price && (
-                          <span className="text-sm font-pp-mori text-gray-500 line-through">
-                            ₦{product.compare_price.toFixed(2)}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Short Description */}
-                      <div className="text-xs text-gray-600 mb-4 line-clamp-2">
-                        {product.short_description || 'Product description coming soon...'}
-                      </div>
-
-                      {/* Add to Cart Button */}
-                      <button 
-                        className="w-full mt-4 bg-brand-black text-white py-2 px-4 rounded-lg hover:bg-gray-800 transition-colors duration-200 font-medium text-sm"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          addToCart(product, 1);
-                          openCart();
-                        }}
-                      >
-                        Add to Cart
-                      </button>
-                    </div>
-                  </motion.div>
-                </Link>
-              ))
-            ) : (
-              // No related products found
-              <div className="col-span-full text-center py-12">
-                <p className="text-gray-500 text-lg">No related products found at the moment.</p>
-              </div>
-            )}
-          </div>
-
-          {/* View All Products Button */}
-          {/* <div className="text-center mt-12">
-            <Link href="/products">
-              <button className="inline-flex items-center gap-2 bg-white border-2 border-brand-black text-brand-black px-8 py-3 rounded-lg hover:bg-brand-black hover:text-white transition-all duration-200 font-semibold">
-                View All Products
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </button>
-            </Link>
-          </div> */}
+              ))}
+            </div>
+          ) : relatedProducts.length > 0 ? (
+            <BentoGrid className="w-full px-0 md:px-6 lg:px-6">
+              {relatedProducts.map((product, i) => (
+                <div key={product.id} className={`${i % 6 === 4 || i % 6 === 6 ? "md:col-span-2" : ""} h-full`}>
+                  <Link href={`/products/${product.slug}`} className="block h-full">
+                    <BentoGridItem
+                      title={product.name}
+                      price={`₦${product.price.toFixed(2)}`}
+                      short_description={product.short_description}
+                      header={
+                        <RelatedProductHeader 
+                          product={product} 
+                          isLarge={i % 6 === 4 || i % 6 === 6}
+                        />
+                      }
+                      className="h-full [&_.text-brand-cream]:text-brand-black cursor-pointer transition-transform duration-200 hover:scale-[1.02]"
+                    />
+                  </Link>
+                </div>
+              ))}
+            </BentoGrid>
+          ) : (
+            // No related products found
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">No related products found at the moment.</p>
+            </div>
+          )}
         </div>
       </motion.div>
     </>
   );
 }
+
+// Related Product Header Component (same as in related-products.tsx)
+const RelatedProductHeader = ({ 
+  product, 
+  isLarge 
+}: { 
+  product: ProductWithImages; 
+  isLarge: boolean;
+}) => {
+  const primaryImage = product.product_images.find(img => img.is_primary) || product.product_images[0];
+  const hasDiscount = product.compare_price && product.compare_price > product.price;
+
+  return (
+    <div className="relative w-full flex-1 group cursor-pointer">
+      {/* Product Image */}
+      <div className="relative w-full h-full overflow-hidden">
+        {primaryImage ? (
+          <Image
+            src={primaryImage.image_url}
+            alt={primaryImage.alt_text || product.name}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            sizes={isLarge ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 100vw, 33vw"}
+          />
+        ) : (
+          <div className="flex items-center justify-center h-full bg-gray-200 dark:bg-gray-800 text-gray-400">
+            <span>No Image</span>
+          </div>
+        )}
+      </div>
+
+      {/* Discount Badge */}
+      {hasDiscount && (
+        <Badge className="absolute top-3 left-3 bg-red-500 text-white border-0 z-10">
+          {Math.round(((product.compare_price! - product.price) / product.compare_price!) * 100)}% OFF
+        </Badge>
+      )}
+
+      {/* Stock Status */}
+      {product.stock_quantity <= 0 && (
+        <Badge className="absolute top-3 right-3 bg-gray-500 text-white border-0 z-10">
+          Out of Stock
+        </Badge>
+      )}
+    </div>
+  );
+};

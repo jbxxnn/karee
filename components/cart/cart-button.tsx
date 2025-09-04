@@ -5,7 +5,7 @@ import { useCartStore } from '@/lib/stores/cart-store';
 import './cart-button.css';
 
 export function CartButton() {
-  const { openCart, items } = useCartStore();
+  const { openCart, items, isHydrated } = useCartStore();
   const totalItemsCount = useMemo(() => 
     items.reduce((total, item) => total + item.quantity, 0), 
     [items]
@@ -15,7 +15,7 @@ export function CartButton() {
     <a 
       href="#" 
       aria-label="Cart" 
-      className="u-p3 header-CartBag relative text-xxs text-brand-black font-pp-mori" 
+      className="u-p3 header-CartBag relative text-xxs text-brand-cream font-pp-mori" 
       data-action="toggle-drawer" 
       data-toggle-id="cart"
       onClick={(e) => {
@@ -23,7 +23,9 @@ export function CartButton() {
         openCart();
       }}
     >
-     <span className="text-xs uppercase font-ultrabold text-brand-black dark:text-brand-cream">cart ({totalItemsCount})</span>
+     <span className="text-xs uppercase font-ultrabold text-brand-cream dark:text-brand-cream">
+       cart ({isHydrated ? totalItemsCount : 0})
+     </span>
     </a>
   );
 }

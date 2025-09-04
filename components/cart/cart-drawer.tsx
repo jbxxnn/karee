@@ -8,7 +8,7 @@ import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function CartDrawer() {
-  const { isOpen, closeCart, items } = useCartStore();
+  const { isOpen, closeCart, items, isHydrated } = useCartStore();
   const totalItemsCount = useMemo(() => 
     items.reduce((total, item) => total + item.quantity, 0), 
     [items]
@@ -66,7 +66,7 @@ export function CartDrawer() {
                   CART
                 </h2>
                 <span className="text-xs font-normal text-gray-900">
-                  PRODUCT ({totalItemsCount})
+                  PRODUCT ({isHydrated ? totalItemsCount : 0})
                 </span>
               </div>
               

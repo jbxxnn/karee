@@ -12,7 +12,7 @@ import { ProductHome } from "@/components/product-home";
 export default function Home() {
   return (
     <Layout>
-      <main className="flex flex-col items-center bg-brand-cream">
+      <main className="flex flex-col items-center bg-[#f8f8f8]">
         <div className="flex-1 w-full flex flex-col gap-20 items-center">
           <div className="w-full flex-1 flex flex-col gap-20 p-0">
             <Hero />

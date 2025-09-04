@@ -8,6 +8,15 @@ export interface CartItem {
   product: Product & {
     product_images: ProductImage[];
     category?: Category;
+    variant_id?: string;
+    variant_name?: string;
+    variant_attributes?: Array<{
+      attribute_name: string;
+      attribute_display: string;
+      value: string;
+      display_value: string;
+      color_code?: string;
+    }>;
   };
   quantity: number;
   selectedVariant?: {
@@ -20,6 +29,7 @@ export interface CartItem {
 interface CartStore {
   items: CartItem[];
   isOpen: boolean;
+  isHydrated: boolean;
   
   // Actions
   addItem: (product: Product & { product_images: ProductImage[]; category?: Category }, quantity?: number, variant?: { id: string; name: string; price: number }) => void;
@@ -29,6 +39,7 @@ interface CartStore {
   toggleCart: () => void;
   openCart: () => void;
   closeCart: () => void;
+  setHydrated: () => void;
   
   // Computed values
   totalItems: number;
@@ -39,15 +50,39 @@ interface CartStore {
   tax: number;
 }
 
-const SHIPPING_THRESHOLD = 50; // Free shipping over $50
-const SHIPPING_COST = 5.99;
-const TAX_RATE = 0.08; // 8% tax rate
+const SHIPPING_THRESHOLD = 0; // Free shipping for all Nigerian orders
+const SHIPPING_COST = 0; // No shipping cost
+const TAX_RATE = 0; // No tax for Nigerian orders
+
+// Manual localStorage handler
+const getInitialState = () => {
+  try {
+    const stored = localStorage.getItem('cart-storage');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (parsed.state?.items) {
+        return {
+          items: parsed.state.items,
+          isOpen: parsed.state.isOpen || false,
+          isHydrated: true,
+        };
+      }
+    }
+  } catch (error) {
+    console.error('Error loading cart from localStorage:', error);
+  }
+  
+  return {
+    items: [],
+    isOpen: false,
+    isHydrated: true,
+  };
+};
 
 export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
-      items: [],
-      isOpen: false,
+      ...getInitialState(),
 
              addItem: (product, quantity = 1, variant) => {
          set((state) => {
@@ -123,6 +158,11 @@ export const useCartStore = create<CartStore>()(
         set({ isOpen: false });
       },
 
+      // Manual hydration trigger
+      setHydrated: () => {
+        set({ isHydrated: true });
+      },
+
       // Computed values - implement as getters
       get totalItems() {
         return get().items.reduce((total, item) => total + item.quantity, 0);
@@ -140,12 +180,11 @@ export const useCartStore = create<CartStore>()(
       },
 
       get shipping() {
-        const subtotal = get().subtotal;
-        return subtotal >= SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
+        return 0; // Free shipping for all Nigerian orders
       },
 
       get tax() {
-        return get().subtotal * TAX_RATE;
+        return 0; // No tax for Nigerian orders
       },
 
       get total() {
@@ -154,7 +193,15 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: 'cart-storage',
-      partialize: (state) => ({ items: state.items }), // Only persist cart items
+      partialize: (state) => ({ 
+        items: state.items,
+        isOpen: state.isOpen
+      }),
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          state.isHydrated = true;
+        }
+      },
     }
   )
 );

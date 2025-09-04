@@ -64,7 +64,17 @@ export function CartItem({ item, onUpdateQuantity, onRemove }: CartItemProps) {
             </p>
           )}
           
-          {item.selectedVariant && (
+          {item.product.variant_attributes && item.product.variant_attributes.length > 0 && (
+            <div className="mt-1">
+              {item.product.variant_attributes.map((attr, index) => (
+                <span key={index} className="text-xs text-gray-600">
+                  {attr.attribute_display}: {attr.display_value}
+                  {index < item.product.variant_attributes!.length - 1 && ', '}
+                </span>
+              ))}
+            </div>
+          )}
+          {item.selectedVariant && !item.product.variant_attributes && (
             <p className="text-xs text-gray-600">
               Variant: {item.selectedVariant.name}
             </p>

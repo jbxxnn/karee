@@ -60,7 +60,8 @@ export async function updateSession(request: NextRequest) {
     "/help",
     "/faq",
     // "/cart", // no standalone cart page
-    "/checkout"
+    "/checkout",
+    "/checkout/success"
   ];
 
   // Define auth routes that handle authentication

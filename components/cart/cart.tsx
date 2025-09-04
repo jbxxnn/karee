@@ -9,11 +9,15 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 export function Cart() {
-  const [isHydrated, setIsHydrated] = useState(false);
   const items = useCartStore(state => state.items);
+  const isHydrated = useCartStore(state => state.isHydrated);
+  // const setHydrated = useCartStore(state => state.setHydrated);
   // const clearCart = useCartStore(state => state.clearCart);
   const updateQuantity = useCartStore(state => state.updateQuantity);
   const removeItem = useCartStore(state => state.removeItem);
+  
+  // Fallback state for loading
+  const [showEmpty, setShowEmpty] = useState(false);
   
   // Memoize computed values to prevent infinite loops
   const computedValues = useMemo(() => {
@@ -28,18 +32,62 @@ export function Cart() {
   
   const { subtotal } = computedValues;
 
-  // Handle hydration
+  // Handle hydration and fallback logic
   useEffect(() => {
-    setIsHydrated(true);
-  }, []);
+    if (!isHydrated) {
+      const timer = setTimeout(() => {
+        setShowEmpty(true);
+      }, 1000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isHydrated]);
 
   // Show loading state while store initializes
-  if (!isHydrated) {
+  if (!isHydrated && !showEmpty) {
     return (
       <div className="text-center py-12">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto"></div>
         <p className="mt-2 text-gray-600">Loading cart...</p>
       </div>
+    );
+  }
+
+  // Show empty cart fallback
+  if (!isHydrated && showEmpty) {
+    return (
+      <motion.div 
+        className="flex flex-col items-center justify-center h-full py-12"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ 
+          duration: 0.5, 
+          ease: "easeOut"
+        }}
+      >
+        <div className="text-center mb-8">
+          <h3 className="text-5xl font-normal text-gray-900 mb-1">
+            Your cart is{' '} <br />
+            <span className="text-5xl italic font-normal text-gray-900">
+              empty
+            </span>
+          </h3>
+        </div>
+        <Link href="/products" className="block">
+          <motion.div 
+            className="flex items-center border border-gray-300 rounded-lg bg-brand-black transition-all duration-200"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <span className="px-6 py-3 text-sm font-medium text-white uppercase tracking-wide">
+              Browse Products
+            </span>
+            <div className="w-8 h-8 bg-brand-cream rounded-full flex items-center justify-center ml-2 mr-2">
+              <ArrowRight className="h-4 w-4 text-brand-black" />
+            </div>
+          </motion.div>
+        </Link>
+      </motion.div>
     );
   }
 

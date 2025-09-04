@@ -177,6 +177,11 @@ export function ProductCard({
               ${product.compare_price!.toFixed(2)}
             </span>
           )}
+          {product.product_variants && product.product_variants.length > 0 && (
+            <Badge variant="outline" className="text-xs">
+              Variants Available
+            </Badge>
+          )}
         </div>
 
         {/* Short Description */}

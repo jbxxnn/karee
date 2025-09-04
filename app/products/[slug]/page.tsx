@@ -4,8 +4,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { productService, ProductWithImages } from '@/lib/services/product-service';
-import { ProductDetail } from '@/components/products/product-detail';
-// import { RelatedProducts } from '@/components/products/related-products';
+import { ProductDetail } from '@/components/catalog/product-detail';
 import { Button } from '@/components/ui/button';
 import { AlertCircle, ArrowLeft } from 'lucide-react';
 import { Layout } from '@/components/layout/layout';
@@ -71,7 +70,9 @@ export default function ProductPage() {
     } catch (err) {
       console.error('❌ Error loading product:', err);
       setError('Failed to load product. Please try again.');
+      setLoading(false); // Only set loading to false on error
     }
+    // Remove the finally block - loading will be set to false by the animation complete handler
   };
 
   if (loading) {
@@ -80,7 +81,7 @@ export default function ProductPage() {
         <div className="text-center">
           {/* Loading Percentage Counter */}
           <motion.div
-            className="text-9xl md:text-[12rem] font-light text-brand-black mb-4 font-serif"
+            className="text-9xl md:text-[12rem] font-light text-brand-black mb-4 font-pp-mori"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
@@ -145,48 +146,8 @@ export default function ProductPage() {
   return (
     <Layout>
       <div className="mx-auto">
-        {/* Breadcrumb */}
-        {/* <nav className="mb-6">
-          <ol className="flex items-center space-x-2 text-sm text-brand-black dark:text-brand-black">
-            <li>
-                <Link href="/" className="hover:text-brand-black dark:hover:text-gray-100">
-                Home
-              </Link>
-            </li>
-            <li>/</li>
-            <li>
-              <Link href="/products" className="hover:text-brand-black dark:hover:text-gray-100">
-                Products
-              </Link>
-            </li>
-            {product.category && (
-              <>
-                <li>/</li>
-                <li>
-                  <Link 
-                    href={`/products?category=${product.category.slug}`}
-                    className="hover:text-brand-black dark:hover:text-gray-100"
-                  >
-                    {product.category.name}
-                  </Link>
-                </li>
-              </>
-            )}
-            <li>/</li>
-            <li className="text-brand-black dark:text-gray-100 font-medium">
-              {product.name}
-            </li>
-          </ol>
-        </nav> */}
-
         {/* Product Detail */}
         <ProductDetail product={product} />
-
-        {/* Related Products */}
-        {/* <RelatedProducts 
-          currentProductId={product.id}
-          categoryId={product.category?.id}
-        /> */}
       </div>
     </Layout>
   );

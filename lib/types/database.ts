@@ -1,10 +1,11 @@
 // Database types for the ecommerce application
 // These types match the Supabase database schema
 
-export type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+export type OrderStatus = 'pending' | 'paid' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
 export type PaymentStatus = 'pending' | 'paid' | 'failed' | 'refunded';
 export type AddressType = 'billing' | 'shipping';
 export type DiscountType = 'percentage' | 'fixed_amount';
+export type UserRole = 'customer' | 'admin' | 'moderator';
 
 export interface Category {
   id: string;
@@ -15,6 +16,8 @@ export interface Category {
   parent_id?: string;
   sort_order: number;
   is_active: boolean;
+  meta_title?: string;
+  meta_description?: string;
   created_at: string;
   updated_at: string;
 }
@@ -80,6 +83,7 @@ export interface UserProfile {
   phone?: string;
   date_of_birth?: string;
   avatar_url?: string;
+  role: UserRole;
   preferences?: {
     newsletter?: boolean;
     marketing_emails?: boolean;
@@ -136,6 +140,11 @@ export interface Order {
   notes?: string;
   stripe_payment_intent_id?: string;
   stripe_charge_id?: string;
+  payment_method?: string;
+  payment_reference?: string;
+  paid_at?: string;
+  payment_details?: any;
+  is_guest_order?: boolean;
   created_at: string;
   updated_at: string;
 }
