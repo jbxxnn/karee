@@ -15,6 +15,7 @@ interface ProductCardProps {
   product: Product & {
     product_images: ProductImage[];
     category?: Category;
+    product_variants?: Record<string, unknown>[];
   };
   onAddToCart?: (productId: string, quantity: number) => void;
   onAddToWishlist?: (productId: string) => void;
