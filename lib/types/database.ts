@@ -143,7 +143,7 @@ export interface Order {
   payment_method?: string;
   payment_reference?: string;
   paid_at?: string;
-  payment_details?: any;
+  payment_details?: Record<string, unknown>;
   is_guest_order?: boolean;
   created_at: string;
   updated_at: string;

@@ -382,7 +382,7 @@ export class ProductService {
         const fileName = `${productId}/${Date.now()}-${i}-${image.name}`;
         
         // Upload to Supabase Storage
-        const { data: uploadData, error: uploadError } = await this.supabase.storage
+        const { error: uploadError } = await this.supabase.storage
           .from('product-images')
           .upload(fileName, image);
 

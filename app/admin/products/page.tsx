@@ -12,9 +12,7 @@ import {
   Edit, 
   Trash2, 
   Eye, 
-  Package,
-  Filter,
-  MoreHorizontal
+  Package
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
