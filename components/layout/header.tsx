@@ -49,8 +49,8 @@ export function Header() {
               aria-label="Toggle mobile menu"
             >
               <div className={`navbar-hamburger ${isMobileMenuOpen ? 'active' : ''}`}>
-                <div className="navbar-hamburger-line navbar-hamburger-line-1"></div>
-                <div className="navbar-hamburger-line navbar-hamburger-line-2"></div>
+                <div className="navbar-hamburger-line navbar-hamburger-line-1 bg-brand-cream"></div>
+                <div className="navbar-hamburger-line navbar-hamburger-line-2 bg-brand-cream"></div>
               </div>
             </button>
             
@@ -129,8 +129,8 @@ export function Header() {
               aria-label="Close mobile menu"
             >
               <div className="w-6 h-6 flex items-center justify-center">
-                <div className="w-4 h-0.5 bg-current transform rotate-45"></div>
-                <div className="w-4 h-0.5 bg-current transform -rotate-45 absolute"></div>
+                <div className="w-4 h-0.5 bg-current transform rotate-45 bg-brand-cream"></div>
+                <div className="w-4 h-0.5 bg-current transform -rotate-45 absolute bg-brand-cream"></div>
               </div>
             </button>
           </div>

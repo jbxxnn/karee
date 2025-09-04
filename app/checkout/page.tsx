@@ -6,9 +6,14 @@ import { useCartStore } from '@/lib/stores/cart-store';
 import { CheckoutForm } from '@/components/checkout/checkout-form';
 import { OrderSummary } from '@/components/checkout/order-summary';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart } from 'lucide-react';
+import { ChevronDown, ShoppingCart } from 'lucide-react';
 import { Layout } from '@/components/layout/layout';
 import Link from 'next/link';
+import {
+  Disclosure,
+  DisclosureContent,
+  DisclosureTrigger,
+} from '@/components/ui/disclosure';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -55,15 +60,28 @@ export default function CheckoutPage() {
           {/* Checkout Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Left Column - Checkout Form */}
-            <div className="flex justify-end p-8 py-24">
-              <div className="w-[70%]">
+            <div className="flex justify-end px-4 md:px-8 p-8 py-8 md:py-24">
+              <div className="w-full md:w-[70%]">
+                <div className="block md:hidden mb-4">
+                  <Disclosure>
+                    <DisclosureTrigger>
+                      <div className="flex items-center justify-between cursor-pointer border border-gray-200 rounded-sm p-2">
+                      Order Summary
+                      <ChevronDown className="w-4 h-4" />
+                      </div>
+                    </DisclosureTrigger>
+                    <DisclosureContent>
+                      <OrderSummary />
+                    </DisclosureContent>
+                  </Disclosure>
+                </div>
               <CheckoutForm />
               </div>
             </div>
 
             {/* Right Column - Order Summary */}
-              <div className="bg-[#f5f5f5] flex justify-start sticky top-8 p-8 py-24">
-                <div className="w-[70%]">
+              <div className="bg-[#f5f5f5] flex justify-start sticky top-8 px-4 md:px-8 p-8 py-8 md:py-24 hidden md:block">
+                <div className="w-full md:w-[70%]">
                 <OrderSummary />
               </div>
             </div>

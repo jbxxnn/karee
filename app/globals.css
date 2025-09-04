@@ -106,7 +106,6 @@
 }
 
 .navbar-hamburger-line {
-  background: #333;
   height: 2px;
   transition: transform .8s cubic-bezier(.18,.71,.11,1), background 1s cubic-bezier(.18,.71,.11,1);
   width: 35px;
