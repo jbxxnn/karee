@@ -1,8 +1,9 @@
-
+import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 
 export function Hero() {
   return (
     <div className="flex flex-col gap-2 items-center">
+      <BackgroundBeamsWithCollision>
       <div 
         className="relative flex flex-col gap-4 items-center justify-center h-[35rem] md:h-[40rem] w-full overflow-hidden"
         // style={{
@@ -24,8 +25,9 @@ export function Hero() {
             Premium skincare products that enhance your natural radiance.
             Experience the difference with our carefully curated collection.
           </p>
+          </div>
         </div>
-      </div>
+      </BackgroundBeamsWithCollision>
     </div>
   );
 }
