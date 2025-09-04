@@ -29,12 +29,13 @@ interface OrderItem {
 }
 
 interface OrderDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function OrderDetailPage({ params }: OrderDetailPageProps) {
+  const { id } = await params;
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -59,7 +60,7 @@ export default async function OrderDetailPage({ params }: OrderDetailPageProps) 
         variant_attributes
       )
     `)
-    .eq('id', params.id)
+    .eq('id', id)
     .eq('user_id', user.id)
     .single();
 
