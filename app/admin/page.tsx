@@ -11,8 +11,6 @@ import {
   Package, 
   ShoppingCart, 
   DollarSign,
-  TrendingUp,
-  TrendingDown,
   Eye,
   Plus,
   Clock,
@@ -22,6 +20,14 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { formatCurrency } from '@/lib/utils';
+import { Order } from '@/lib/types/database';
+
+interface OrderWithProfile extends Order {
+  user_profiles?: {
+    first_name?: string;
+    last_name?: string;
+  };
+}
 
 interface DashboardStats {
   total_products: number;
@@ -37,7 +43,7 @@ export default function AdminDashboard() {
     total_customers: 0,
     total_revenue: 0
   });
-  const [recentOrders, setRecentOrders] = useState<any[]>([]);
+  const [recentOrders, setRecentOrders] = useState<OrderWithProfile[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

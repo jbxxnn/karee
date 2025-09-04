@@ -78,8 +78,10 @@ export default function ProductVariantsPage() {
       // Load attribute values for each attribute
       const valuesMap: Record<string, ProductAttributeValue[]> = {};
       for (const attr of attributesData) {
-        const values = await productVariantService.getAttributeValues(attr.id);
-        valuesMap[attr.id] = values;
+        if (attr.id) {
+          const values = await productVariantService.getAttributeValues(attr.id);
+          valuesMap[attr.id] = values;
+        }
       }
       setAttributeValues(valuesMap);
 
@@ -326,15 +328,15 @@ export default function ProductVariantsPage() {
                       className="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm"
                       onChange={(e) => {
                         if (e.target.value) {
-                          addAttributeToForm(attribute.id, e.target.value);
+                          addAttributeToForm(attribute.id || '', e.target.value);
                         } else {
-                          removeAttributeFromForm(attribute.id);
+                          removeAttributeFromForm(attribute.id || '');
                         }
                       }}
                       value={formData.attributes.find(attr => attr.attribute_id === attribute.id)?.attribute_value_id || ''}
                     >
                       <option value="">Select {attribute.display_name}</option>
-                      {attributeValues[attribute.id]?.map(value => (
+                      {attributeValues[attribute.id || '']?.map(value => (
                         <option key={value.id} value={value.id}>
                           {value.display_value}
                         </option>

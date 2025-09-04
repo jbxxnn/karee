@@ -8,11 +8,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Badge } from '@/components/ui/badge';
 import { 
   ArrowLeft, 
-  Save, 
-  FolderOpen
+  Save
 } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'react-hot-toast';
@@ -21,7 +19,7 @@ import { categoryService } from '@/lib/services/category-service';
 interface CategoryFormData {
   name: string;
   slug: string;
-  description: string;
+  description?: string;
   is_active: boolean;
   sort_order: number;
   meta_title: string;
@@ -48,7 +46,7 @@ export default function NewCategoryPage() {
       .replace(/(^-|-$)/g, '');
   };
 
-  const handleInputChange = (field: keyof CategoryFormData, value: any) => {
+  const handleInputChange = (field: keyof CategoryFormData, value: string | number | boolean) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
@@ -58,7 +56,7 @@ export default function NewCategoryPage() {
     if (field === 'name' && !formData.slug) {
       setFormData(prev => ({
         ...prev,
-        slug: generateSlug(value)
+        slug: generateSlug(value as string)
       }));
     }
   };
@@ -221,7 +219,7 @@ export default function NewCategoryPage() {
                   <Label htmlFor="is_active">Active</Label>
                 </div>
                 <p className="text-xs text-gray-500">
-                  Inactive categories won't be visible to customers
+                  Inactive categories won&apos;t be visible to customers
                 </p>
               </CardContent>
             </Card>

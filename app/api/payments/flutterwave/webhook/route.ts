@@ -5,14 +5,14 @@ import { createClient } from '@/lib/supabase/server';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const signature = request.headers.get('verif-hash');
+    // const signature = request.headers.get('verif-hash');
 
     // Verify webhook signature (implement proper verification)
     // For now, we'll process the webhook
     console.log('Flutterwave webhook received:', body);
 
     // Handle the webhook
-    const isProcessed = await FlutterwaveService.handleWebhook(body, signature || '');
+    const isProcessed = await FlutterwaveService.handleWebhook(body);
 
     if (isProcessed) {
       // Extract order information
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
 }
 
 // Handle GET requests for webhook verification
-export async function GET(request: NextRequest) {
+export async function GET() {
   return NextResponse.json({ 
     message: 'Flutterwave webhook endpoint is active',
     timestamp: new Date().toISOString()

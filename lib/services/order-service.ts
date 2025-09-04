@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client';
-import { Order, OrderItem, OrderStatus, PaymentStatus } from '@/lib/types/database';
+import { Order, OrderStatus, PaymentStatus } from '@/lib/types/database';
 
 export class OrderService {
   private supabase = createClient();

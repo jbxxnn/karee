@@ -8,11 +8,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { User, Lock, Mail, Eye, EyeOff, CheckCircle } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import type { User as SupabaseUser } from '@supabase/supabase-js';
 
 interface GuestAccountCreationProps {
   orderId: string;
   customerEmail: string;
-  onAccountCreated: (user: any) => void;
+  onAccountCreated: (user: SupabaseUser) => void;
   onSkip: () => void;
 }
 
@@ -80,9 +81,9 @@ export function GuestAccountCreation({
           onAccountCreated(data.user);
         }
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Account creation error:', error);
-      toast.error(error.message || 'Failed to create account');
+      toast.error(error instanceof Error ? error.message : 'Failed to create account');
     } finally {
       setIsLoading(false);
     }

@@ -50,9 +50,6 @@ interface CartStore {
   tax: number;
 }
 
-const SHIPPING_THRESHOLD = 0; // Free shipping for all Nigerian orders
-const SHIPPING_COST = 0; // No shipping cost
-const TAX_RATE = 0; // No tax for Nigerian orders
 
 // Manual localStorage handler
 const getInitialState = () => {

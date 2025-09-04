@@ -8,20 +8,22 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
   ArrowLeft, 
   Save, 
   Upload, 
   X,
-  Package,
-  Image as ImageIcon
 } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'react-hot-toast';
 import { categoryService } from '@/lib/services/category-service';
 import { productService } from '@/lib/services/product-service';
+
+interface Category {
+  id: string;
+  name: string;
+}
 
 interface ProductFormData {
   name: string;
@@ -73,7 +75,7 @@ export default function NewProductPage() {
   });
   const [images, setImages] = useState<File[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
-  const [categories, setCategories] = useState<any[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   const generateSlug = (name: string) => {
     return name
@@ -95,14 +97,14 @@ export default function NewProductPage() {
     loadCategories();
   }, []);
 
-  const handleInputChange = (field: keyof ProductFormData, value: any) => {
+  const handleInputChange = (field: keyof ProductFormData, value: string | number | boolean | string[]) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
     }));
 
     // Auto-generate slug from name
-    if (field === 'name' && !formData.slug) {
+    if (field === 'name' && !formData.slug && typeof value === 'string') {
       setFormData(prev => ({
         ...prev,
         slug: generateSlug(value)

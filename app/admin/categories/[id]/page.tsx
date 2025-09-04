@@ -23,11 +23,11 @@ interface Category {
   id: string;
   name: string;
   slug: string;
-  description: string;
+  description?: string;
   is_active: boolean;
   sort_order: number;
-  meta_title: string;
-  meta_description: string;
+  meta_title?: string;
+  meta_description?: string;
   created_at: string;
   updated_at: string;
 }
@@ -80,7 +80,7 @@ export default function EditCategoryPage() {
     }
   };
 
-  const handleInputChange = (field: keyof typeof formData, value: any) => {
+  const handleInputChange = (field: keyof typeof formData, value: string | number | boolean) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
@@ -135,7 +135,7 @@ export default function EditCategoryPage() {
             Category Not Found
           </h2>
           <p className="text-gray-600 mb-4">
-            The category you're looking for doesn't exist.
+            The category you&apos;re looking for doesn&apos;t exist.
           </p>
           <Link href="/admin/categories">
             <Button>
@@ -283,7 +283,7 @@ export default function EditCategoryPage() {
                   <Label htmlFor="is_active">Active</Label>
                 </div>
                 <p className="text-xs text-gray-500">
-                  Inactive categories won't be visible to customers
+                  Inactive categories won&apos;t be visible to customers
                 </p>
               </CardContent>
             </Card>

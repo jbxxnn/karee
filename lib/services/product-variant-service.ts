@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/client';
 
 export interface ProductAttribute {
-  id: string;
+  id: string | null;
   name: string;
   display_name: string;
   type: 'text' | 'color' | 'image' | 'number';
@@ -29,7 +29,7 @@ export interface ProductVariant {
   stock_quantity: number;
   is_active: boolean;
   variant_active?: boolean; // From view query
-  variant_combination?: any;
+  variant_combination?: Record<string, unknown>;
   image_url?: string;
   variant_image?: string; // From view query
   weight_grams?: number;
@@ -167,7 +167,7 @@ export class ProductVariantService {
       // Insert variant attributes
       if (variantData.attributes.length > 0) {
         const variantAttributes = variantData.attributes.map(attr => ({
-          variant_id: variant.id,
+          variant_id: variant.id || '',
           attribute_id: attr.attribute_id,
           attribute_value_id: attr.attribute_value_id
         }));
@@ -180,7 +180,7 @@ export class ProductVariantService {
       }
 
       // Return the created variant with full details
-      return await this.getVariantById(variant.id);
+      return await this.getVariantById(variant.id || '');
     } catch (error) {
       console.error('Error creating variant:', error);
       return null;
@@ -191,7 +191,7 @@ export class ProductVariantService {
   async updateVariant(variantId: string, variantData: Partial<CreateVariantData>): Promise<ProductVariant | null> {
     try {
       // Update variant basic info
-      const updateData: any = {};
+      const updateData: Record<string, unknown> = {};
       if (variantData.sku !== undefined) updateData.sku = variantData.sku;
       if (variantData.price_adjustment !== undefined) updateData.price_adjustment = variantData.price_adjustment;
       if (variantData.stock_quantity !== undefined) updateData.stock_quantity = variantData.stock_quantity;
@@ -207,7 +207,7 @@ export class ProductVariantService {
         const { error: variantError } = await this.supabase
           .from('product_variants')
           .update(updateData)
-          .eq('id', variantId);
+          .eq('id', variantId || '');
 
         if (variantError) throw variantError;
       }
@@ -218,12 +218,12 @@ export class ProductVariantService {
         await this.supabase
           .from('product_variant_attributes')
           .delete()
-          .eq('variant_id', variantId);
+          .eq('variant_id', variantId || '');
 
         // Insert new attributes
         if (variantData.attributes.length > 0) {
           const variantAttributes = variantData.attributes.map(attr => ({
-            variant_id: variantId,
+            variant_id: variantId || '',
             attribute_id: attr.attribute_id,
             attribute_value_id: attr.attribute_value_id
           }));
@@ -236,7 +236,7 @@ export class ProductVariantService {
         }
       }
 
-      return await this.getVariantById(variantId);
+      return await this.getVariantById(variantId || '');
     } catch (error) {
       console.error('Error updating variant:', error);
       return null;
@@ -249,7 +249,7 @@ export class ProductVariantService {
       const { error } = await this.supabase
         .from('product_variants')
         .delete()
-        .eq('id', variantId);
+        .eq('id', variantId || '');
 
       if (error) throw error;
       return true;
@@ -265,7 +265,7 @@ export class ProductVariantService {
       const { error } = await this.supabase
         .from('product_variants')
         .update({ stock_quantity: stockQuantity })
-        .eq('id', variantId);
+        .eq('id', variantId || '');
 
       if (error) throw error;
       return true;
@@ -279,7 +279,7 @@ export class ProductVariantService {
   async getVariantCombinations(productId: string): Promise<{
     attributes: ProductAttribute[];
     combinations: Array<{
-      variant_id: string;
+      variant_id: string | null;
       sku?: string;
       price_adjustment: number;
       stock_quantity: number;
@@ -298,7 +298,7 @@ export class ProductVariantService {
         });
 
         return {
-          variant_id: variant.id,
+          variant_id: variant.id || null,
           sku: variant.sku,
           price_adjustment: variant.price_adjustment,
           stock_quantity: variant.stock_quantity,
@@ -315,7 +315,7 @@ export class ProductVariantService {
   }
 
   // Helper method to build variant combination JSON
-  private buildVariantCombination(attributes: Array<{ attribute_id: string; attribute_value_id: string }>): any {
+  private buildVariantCombination(attributes: Array<{ attribute_id: string; attribute_value_id: string }>): Record<string, unknown> {
     // This would typically build a JSON object representing the combination
     // For now, we'll store the attributes array
     return { attributes };

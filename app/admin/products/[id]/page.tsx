@@ -23,6 +23,7 @@ import {
 import Link from 'next/link';
 import { toast } from 'react-hot-toast';
 import { categoryService } from '@/lib/services/category-service';
+import Image from 'next/image';
 
 export default function EditProductPage() {
   const router = useRouter();
@@ -437,19 +438,21 @@ export default function EditProductPage() {
                 <CardTitle>Product Images</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {product.product_images.length > 0 ? (
+                {product.product_images?.length > 0 ? (
                   <div className="space-y-2">
                     <Label>Current Images</Label>
                     <div className="grid grid-cols-2 gap-2">
-                      {product.product_images.map((image) => (
+                      {product.product_images?.map((image) => (
                         <div key={image.id} className="relative">
-                          <img
-                            src={image.image_url}
+                          <Image
+                            src={image.image_url || ''}
                             alt={image.alt_text || product.name}
                             className="w-full h-20 object-cover rounded"
+                            width={100}
+                            height={100}
                           />
                           <div className="absolute top-1 right-1">
-                            {image.is_primary && (
+                            {image.is_primary || false && (
                               <Badge variant="secondary" className="text-xs">
                                 Primary
                               </Badge>

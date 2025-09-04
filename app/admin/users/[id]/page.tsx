@@ -11,15 +11,11 @@ import {
   ArrowLeft, 
   User, 
   Mail, 
-  Phone, 
   Calendar, 
-  Shield, 
-  UserCheck, 
-  UserX,
+  Shield,
   Loader2,
   Save,
-  Edit,
-  Trash2
+  Edit
 } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'react-hot-toast';
@@ -61,7 +57,7 @@ export default function UserDetailPage() {
           last_name: userData.user_profiles?.last_name || '',
           phone: userData.user_profiles?.phone || '',
           role: userData.user_profiles?.role || 'customer',
-          is_active: userData.user_profiles?.is_active ?? true,
+          is_active: true,
         });
       } else {
         toast.error('User not found');
@@ -106,18 +102,6 @@ export default function UserDetailPage() {
     }
   };
 
-  const handleStatusUpdate = async (isActive: boolean) => {
-    if (!user) return;
-
-    try {
-      await userManagementService.updateUserStatus(userId, isActive);
-      toast.success(`User ${isActive ? 'activated' : 'deactivated'} successfully!`);
-      await loadUser(); // Refresh user data
-    } catch (error) {
-      console.error('Error updating user status:', error);
-      toast.error('Failed to update user status');
-    }
-  };
 
   const getRoleIcon = (role: UserRole) => {
     switch (role) {

@@ -1,11 +1,3 @@
-const Flutterwave = require('flutterwave-node-v3');
-
-// Flutterwave configuration
-const flutterwave = new Flutterwave(
-  process.env.FLUTTERWAVE_PUBLIC_KEY!,
-  process.env.FLUTTERWAVE_SECRET_KEY!
-);
-
 // Flutterwave SDK initialized
 
 export interface FlutterwavePaymentData {
@@ -23,7 +15,7 @@ export interface FlutterwavePaymentData {
     description: string;
     logo?: string;
   };
-  meta?: Record<string, any>;
+  meta?: Record<string, string>;
 }
 
 export interface FlutterwaveResponse {
@@ -61,7 +53,6 @@ export interface FlutterwaveVerificationResponse {
     created_at: string;
     status: string;
     payment_type: string;
-    created_at: string;
     account_id: number;
     customer: {
       id: number;
@@ -180,18 +171,17 @@ export class FlutterwaveService {
   /**
    * Handle webhook from Flutterwave
    */
-  static async handleWebhook(payload: any, signature: string): Promise<boolean> {
+  static async handleWebhook(payload: Record<string, unknown>): Promise<boolean> {
     try {
       // Verify webhook signature (implement based on Flutterwave docs)
       // For now, we'll process the webhook
       
-      if (payload.event === 'charge.completed' && payload.data.status === 'successful') {
+      if (payload.event === 'charge.completed' && (payload.data as Record<string, unknown>)?.status === 'successful') {
         // Payment was successful
-        const transactionId = payload.data.id;
-        const txRef = payload.data.tx_ref;
+        const transactionId = (payload.data as Record<string, unknown>)?.id;
         
         // Verify the payment
-        const verification = await this.verifyPayment(transactionId.toString());
+        const verification = await this.verifyPayment(transactionId?.toString() || '');
         
         if (verification.status === 'success' && verification.data.status === 'successful') {
           // Update order status in database

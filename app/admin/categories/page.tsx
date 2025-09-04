@@ -12,9 +12,7 @@ import {
   Edit, 
   Trash2, 
   Eye, 
-  FolderOpen,
-  Filter,
-  MoreHorizontal
+  FolderOpen
 } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'react-hot-toast';
@@ -23,11 +21,11 @@ interface Category {
   id: string;
   name: string;
   slug: string;
-  description: string;
+  description?: string;
   is_active: boolean;
   sort_order: number;
-  meta_title: string;
-  meta_description: string;
+  meta_title?: string;
+  meta_description?: string;
   created_at: string;
   updated_at: string;
 }

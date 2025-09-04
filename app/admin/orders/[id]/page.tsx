@@ -11,13 +11,36 @@ import Link from 'next/link';
 import { toast } from 'react-hot-toast';
 import { formatCurrency } from '@/lib/utils';
 
+interface OrderItem {
+  id: string;
+  product_name: string;
+  quantity: number;
+  unit_price: number;
+  total_price: number;
+}
+
+interface Order {
+  id: string;
+  order_number: string;
+  status: string;
+  payment_status: string;
+  total_amount: number;
+  created_at: string;
+  order_items?: OrderItem[];
+  user_profiles?: {
+    first_name?: string;
+    last_name?: string;
+    phone?: string;
+  };
+}
+
 export default function OrderDetailPage() {
   const router = useRouter();
   const params = useParams();
   const orderId = params.id as string;
   
   const [loading, setLoading] = useState(true);
-  const [order, setOrder] = useState<any>(null);
+  const [order, setOrder] = useState<Order | null>(null);
 
   useEffect(() => {
     if (orderId) {
@@ -110,7 +133,7 @@ export default function OrderDetailPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                                 {order.order_items?.map((item: any) => (
+                                 {order.order_items?.map((item: OrderItem) => (
                    <div key={item.id} className="flex items-center space-x-4 p-4 border rounded-lg">
                      <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
                        <Package className="h-8 w-8 text-gray-400" />

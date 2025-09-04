@@ -16,8 +16,7 @@ import {
   Clock,
   CheckCircle,
   Truck,
-  XCircle,
-  Filter
+  XCircle
 } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'react-hot-toast';
@@ -36,7 +35,7 @@ interface Order {
     last_name: string;
     phone: string;
   };
-  order_items: Array<{
+  order_items?: Array<{
     id: string;
     quantity: number;
     unit_price: number;
@@ -325,7 +324,7 @@ export default function AdminOrdersPage() {
                     <div>
                       <p className="text-sm font-medium text-gray-600">Items</p>
                       <p className="text-gray-900">
-                        {order.order_items.length} item{order.order_items.length !== 1 ? 's' : ''}
+                        {order.order_items?.length || 0} item{(order.order_items?.length || 0) !== 1 ? 's' : ''}
                       </p>
                     </div>
                     <div>
@@ -340,16 +339,16 @@ export default function AdminOrdersPage() {
                   <div className="border-t pt-4">
                     <p className="text-sm font-medium text-gray-600 mb-2">Items:</p>
                     <div className="flex flex-wrap gap-2">
-                                             {order.order_items.slice(0, 3).map((item, index) => (
+                                             {order.order_items?.slice(0, 3).map((item) => (
                          <div key={item.id} className="flex items-center space-x-2 bg-gray-50 px-3 py-2 rounded-md">
                            <span className="text-sm text-gray-900">
                              {item.product_name} x{item.quantity}
                            </span>
                          </div>
                        ))}
-                      {order.order_items.length > 3 && (
+                      {(order.order_items?.length || 0) > 3 && (
                         <span className="text-sm text-gray-500">
-                          +{order.order_items.length - 3} more
+                          +{(order.order_items?.length || 0) - 3} more
                         </span>
                       )}
                     </div>

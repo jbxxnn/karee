@@ -10,17 +10,12 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { 
   Search, 
   Users, 
-  UserCheck, 
-  UserX, 
+  UserCheck,
   Shield, 
-  ShieldCheck, 
-  ShieldX,
+  ShieldCheck,
   Mail,
-  MailCheck,
   Calendar,
-  MoreHorizontal,
   Edit,
-  Trash2,
   Filter,
   ChevronLeft,
   ChevronRight,
@@ -145,17 +140,7 @@ export default function AdminUsersPage() {
     }
   };
 
-  const handleStatusUpdate = async (userId: string, isActive: boolean) => {
-    try {
-      await userManagementService.updateUserStatus(userId, isActive);
-      toast.success(`User ${isActive ? 'activated' : 'deactivated'} successfully!`);
-      await loadUsers();
-      await loadStats();
-    } catch (error) {
-      console.error('Error updating user status:', error);
-      toast.error('Failed to update user status');
-    }
-  };
+ 
 
   const handleBulkRoleUpdate = async (role: UserRole) => {
     if (selectedUsers.length === 0) {
@@ -173,25 +158,6 @@ export default function AdminUsersPage() {
     } catch (error) {
       console.error('Error bulk updating user roles:', error);
       toast.error('Failed to update user roles');
-    }
-  };
-
-  const handleBulkStatusUpdate = async (isActive: boolean) => {
-    if (selectedUsers.length === 0) {
-      toast.error('Please select users first');
-      return;
-    }
-
-    try {
-      await userManagementService.bulkUpdateUserStatus(selectedUsers, isActive);
-      toast.success(`${selectedUsers.length} users ${isActive ? 'activated' : 'deactivated'}`);
-      setSelectedUsers([]);
-      setSelectAll(false);
-      await loadUsers();
-      await loadStats();
-    } catch (error) {
-      console.error('Error bulk updating user status:', error);
-      toast.error('Failed to update user status');
     }
   };
 
@@ -230,13 +196,7 @@ export default function AdminUsersPage() {
     }
   };
 
-  const getStatusColor = (isActive: boolean) => {
-    return isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
-  };
 
-  const getVerificationColor = (isVerified: boolean) => {
-    return isVerified ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800';
-  };
 
   if (loading && users.length === 0) {
     return (

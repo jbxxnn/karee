@@ -217,7 +217,7 @@ export class UserManagementService {
     }
   }
 
-  async updateUserStatus(userId: string, isActive: boolean): Promise<boolean> {
+  async updateUserStatus(): Promise<boolean> {
     try {
       console.log('⚠️ updateUserStatus called but is_active column not available');
       // For now, just return true since we can't update status without the column
@@ -327,7 +327,7 @@ export class UserManagementService {
     }
   }
 
-  async bulkUpdateUserStatus(userIds: string[], isActive: boolean): Promise<boolean> {
+  async bulkUpdateUserStatus(): Promise<boolean> {
     try {
       console.log('⚠️ bulkUpdateUserStatus called but is_active column not available');
       // For now, just return true since we can't update status without the column
@@ -338,7 +338,7 @@ export class UserManagementService {
     }
   }
 
-  async deleteUser(userId: string): Promise<boolean> {
+  async deleteUser(): Promise<boolean> {
     try {
       console.log('⚠️ deleteUser called but is_active column not available');
       // For now, just return true since we can't deactivate without the column

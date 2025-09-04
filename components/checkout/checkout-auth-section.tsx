@@ -6,13 +6,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
-import { User, Lock, Mail, Eye, EyeOff } from 'lucide-react';
+import { User as UserIcon, Lock, Mail, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import type { User } from '@supabase/supabase-js';
 
 interface CheckoutAuthSectionProps {
-  onAuthSuccess: (user: any) => void;
+  onAuthSuccess: (user: User) => void;
   onGuestCheckout: () => void;
   initialEmail?: string;
 }
@@ -29,7 +29,6 @@ export function CheckoutAuthSection({
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [createAccount, setCreateAccount] = useState(false);
   const [isGuestCheckout, setIsGuestCheckout] = useState(false);
 
   const supabase = createClient();
@@ -63,9 +62,9 @@ export function CheckoutAuthSection({
 
       toast.success('Login successful!');
       onAuthSuccess(data.user);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Login error:', error);
-      toast.error(error.message || 'Login failed');
+      toast.error(error instanceof Error ? error.message : 'Login failed');
     } finally {
       setIsLoading(false);
     }
@@ -113,11 +112,13 @@ export function CheckoutAuthSection({
       } else {
         console.log('User created and confirmed:', data.user);
         toast.success('Account created successfully!');
-        onAuthSuccess(data.user);
+        if (data.user) {
+          onAuthSuccess(data.user);
+        }
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Signup error:', error);
-      toast.error(error.message || 'Signup failed');
+      toast.error(error instanceof Error ? error.message : 'Signup failed');
     } finally {
       setIsLoading(false);
     }
@@ -132,15 +133,15 @@ export function CheckoutAuthSection({
     return (
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <User className="h-5 w-5" />
-            Guest Checkout
-          </CardTitle>
+                  <CardTitle className="flex items-center gap-2">
+          <UserIcon className="h-5 w-5" />
+          Guest Checkout
+        </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-center space-y-4">
             <p className="text-gray-600">
-              You're checking out as a guest. You can create an account after your purchase.
+              You&apos;re checking out as a guest. You can create an account after your purchase.
             </p>
             <Button 
               variant="outline" 
@@ -159,7 +160,7 @@ export function CheckoutAuthSection({
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <User className="h-5 w-5" />
+          <UserIcon className="h-5 w-5" />
           {isLoginMode ? 'Login to Your Account' : 'Create Account'}
         </CardTitle>
       </CardHeader>
@@ -314,7 +315,7 @@ export function CheckoutAuthSection({
         {/* Guest Checkout Option */}
         <div className="text-center">
           <p className="text-sm text-gray-600 mb-3">
-            Don't want to create an account?
+            Don&apos;t want to create an account?
           </p>
           <Button 
             variant="outline" 

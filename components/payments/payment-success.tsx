@@ -17,7 +17,6 @@ export default function PaymentSuccess() {
   const [isGuestOrder, setIsGuestOrder] = useState(false);
   const [customerEmail, setCustomerEmail] = useState<string>('');
   const [showAccountCreation, setShowAccountCreation] = useState(false);
-  const [currentUser, setCurrentUser] = useState<any>(null);
 
   const supabase = createClient();
 
@@ -98,8 +97,7 @@ export default function PaymentSuccess() {
     }
   };
 
-  const handleAccountCreated = (user: any) => {
-    setCurrentUser(user);
+  const handleAccountCreated = () => {
     setShowAccountCreation(false);
     toast.success('Account created successfully!');
   };

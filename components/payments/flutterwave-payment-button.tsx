@@ -25,7 +25,6 @@ export default function FlutterwavePaymentButton({
   customerName,
   customerPhone,
   orderItems,
-  onPaymentSuccess,
   onPaymentError,
   className,
   disabled = false,

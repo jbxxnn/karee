@@ -14,7 +14,6 @@ import {
   Settings, 
   LogOut,
   Home,
-  User,
   Shield,
   FolderOpen
 } from 'lucide-react';
@@ -48,7 +47,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   }, [loading, isAdmin, router]);
 
   const handleLogout = async () => {
-    const { supabase } = await import('@/lib/supabase/client');
+    const { createClient } = await import('@/lib/supabase/client');
+    const supabase = createClient();
     await supabase.auth.signOut();
     router.push('/');
   };
@@ -74,7 +74,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             Access Denied
           </h2>
           <p className="text-gray-600 mb-4">
-            You don't have permission to access the admin panel.
+            You don&apos;t have permission to access the admin panel.
           </p>
           <Button onClick={() => router.push('/')}>
             Return to Home

@@ -1,6 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 
+interface OrderItem {
+  product_id: string;
+  variant_id?: string;
+  quantity: number;
+  unit_price: number;
+  total_price: number;
+  product_name: string;
+  product_sku?: string;
+  variant_name?: string;
+  variant_attributes?: string;
+}
+
 export async function POST(request: NextRequest) {
   try {
     console.log('Order creation API called');
@@ -26,7 +38,7 @@ export async function POST(request: NextRequest) {
 
     // Get authenticated user (optional for guest checkout)
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
 
     // Allow guest checkout if no user is authenticated
     const userId = user?.id || null;
@@ -81,7 +93,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create order items
-    const orderItems = items.map((item: any) => ({
+    const orderItems = items.map((item: OrderItem) => ({
       order_id: order.id,
       product_id: item.product_id,
       variant_id: item.variant_id || null,
@@ -235,7 +247,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const supabase = await createClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
