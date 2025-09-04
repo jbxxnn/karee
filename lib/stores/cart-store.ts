@@ -53,6 +53,15 @@ interface CartStore {
 
 // Manual localStorage handler
 const getInitialState = () => {
+  // Check if we're in a browser environment
+  if (typeof window === 'undefined') {
+    return {
+      items: [],
+      isOpen: false,
+      isHydrated: false,
+    };
+  }
+
   try {
     const stored = localStorage.getItem('cart-storage');
     if (stored) {

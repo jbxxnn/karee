@@ -85,7 +85,7 @@ export default function PaymentSuccess() {
     };
 
     verifyPayment();
-  }, [searchParams]);
+  }, [searchParams, supabase]);
 
   const handleContinueShopping = () => {
     router.push('/products');
